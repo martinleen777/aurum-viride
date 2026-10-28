@@ -1,6 +1,7 @@
 // Генератор сайта Aurum Viride: читает kit/data/books.json и собирает статический сайт в _site/.
 // Запуск: node src/build.mjs   (SITE_URL=https://... — адрес сайта для canonical, sitemap и OpenGraph)
 
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -17,6 +18,9 @@ const BASE_PATH = new URL(SITE_URL + "/").pathname; // "/" или "/aurum-viride
 const NAME = "Aurum Viride";
 const EDITOR = "Leonid Dudakov";
 const LOCALES = { en: "en_US", de: "de_DE", ru: "ru_RU" };
+// Метка версии в адресах стилей и скрипта: после обновления сайта браузер сразу берёт новые файлы, а не старые из кеша.
+const version = (file) => crypto.createHash("sha1").update(fs.readFileSync(path.join(SRC, file))).digest("hex").slice(0, 10);
+const ASSET_V = { css: version("style.css"), js: version("site.js") };
 
 // ---------- утилиты ----------
 const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -178,9 +182,9 @@ ${LANGS.filter((l) => l !== lang).map((l) => `<meta property="og:locale:alternat
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="${root}assets/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="${root}assets/img/apple-touch-icon.png">
-<link rel="stylesheet" href="${root}assets/style.css">
+<link rel="stylesheet" href="${root}assets/style.css?v=${ASSET_V.css}">
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, "\\u003c")}</script>` : ""}
-<script src="${root}assets/site.js" defer></script>
+<script src="${root}assets/site.js?v=${ASSET_V.js}" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">${t.skip}</a>
