@@ -306,6 +306,24 @@ p { margin: 0 0 1em; }
 .footer-links a { color: #424245; }
 @media (max-width: 640px) { .footer-inner { flex-direction: column; } }
 
+/* ---------- Баннер согласия на аналитику ---------- */
+.consent {
+  position: fixed; z-index: 50; left: 50%; bottom: 16px; transform: translateX(-50%);
+  width: min(560px, calc(100% - 32px));
+  background: #fff; color: var(--text);
+  border-radius: 18px; padding: 1.25rem 1.4rem 1.3rem;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 20px 50px -12px rgba(0, 0, 0, .35);
+  border-top: 4px solid var(--green);
+}
+.consent-title { font: 700 1.05rem/1.3 var(--display); letter-spacing: -.01em; margin: 0 0 .4rem; }
+.consent-text { font-size: .9rem; line-height: 1.5; color: #3a3a3c; margin: 0 0 1rem; }
+.consent-actions { display: flex; gap: .6rem; }
+/* обе кнопки одинаковые: отказ так же заметен, как согласие */
+.consent-btn { flex: 1; background: var(--green); border-color: var(--green); color: #fff; min-height: 44px; }
+.consent-btn:hover { background: var(--green-deep); border-color: var(--green-deep); color: #fff; }
+.consent-open { font: inherit; color: #424245; background: none; border: 0; padding: 0; cursor: pointer; }
+.consent-open:hover { text-decoration: underline; }
+
 /* ---------- Просмотр картинок ---------- */
 .lightbox { border: 0; padding: 0; background: transparent; max-width: 100vw; max-height: 100vh; width: 100vw; height: 100vh; overflow: hidden; }
 .lightbox::backdrop { background: rgba(0, 0, 0, .85); }

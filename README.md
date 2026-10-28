@@ -79,6 +79,17 @@ npm run serve
 3. **Settings → Pages → Custom domain:** `aurumviride.com` → Save. Когда проверка DNS пройдёт, включите **Enforce HTTPS**.
 4. Перезапустите сборку (Actions → Run workflow), чтобы ссылки для поисковиков (canonical, sitemap) получили новый адрес. Сборка берёт адрес из настроек Pages сама.
 
+## Google Analytics и баннер согласия
+
+Идентификатор аналитики (`G-NQVC60S34Z`) записан в `src/config.mjs`. Если вписать туда `""`, аналитика и баннер отключатся.
+
+Как это работает (требования TDDDG § 25 и GDPR):
+- при первом посещении внизу экрана появляется баннер с одинаково заметными кнопками «Принять» и «Отклонить»;
+- Google Analytics загружается **только после «Принять»**; до этого сайт не обращается к Google и не ставит cookies;
+- выбор запоминается в браузере, а ссылка «Настройки cookies» внизу каждой страницы снова открывает баннер; при отзыве согласия cookies Google Analytics удаляются.
+
+В настройках Google Analytics (Admin → Data collection and modification → **Data retention**) выберите срок хранения данных, например 14 месяцев, и впишите его вместо `[ZEITRAUM]`, `[PERIOD]`, `[СРОК]` в разделе про Google Analytics в `src/i18n.mjs` (`PRIVACY`).
+
 ## Юридические страницы
 
 Impressum и Datenschutzerklärung лежат в `src/i18n.mjs` (`IMPRESSUM`, `PRIVACY`). Замените заглушки `[NAME]`, `[ADDRESS]`, `[EMAIL]` на свои данные на всех трёх языках.

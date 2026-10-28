@@ -8,6 +8,73 @@
     ru: { close: "Закрыть", prev: "Назад", next: "Вперёд" }
   }[lang] || { close: "Close", prev: "Previous", next: "Next" };
 
+  // ---------- Согласие на Google Analytics ----------
+  // Аналитика загружается только после «Принять». Выбор хранится в localStorage;
+  // по ссылке «Настройки cookies» внизу страницы его можно изменить в любой момент.
+  var GA_ID = document.documentElement.getAttribute("data-ga");
+  var banner = document.querySelector(".consent");
+  var CONSENT_KEY = "av-analytics-consent";
+
+  function getConsent() {
+    try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; }
+  }
+  function setConsent(v) {
+    try { localStorage.setItem(CONSENT_KEY, v); } catch (e) { /* без сохранения выбор действует до закрытия страницы */ }
+  }
+  function loadAnalytics() {
+    if (!GA_ID || window.__avGaLoaded) return;
+    window.__avGaLoaded = true;
+    window["ga-disable-" + GA_ID] = false;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag("js", new Date());
+    window.gtag("config", GA_ID);
+    var sc = document.createElement("script");
+    sc.async = true;
+    sc.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(GA_ID);
+    document.head.appendChild(sc);
+  }
+  function removeAnalytics() {
+    if (GA_ID) window["ga-disable-" + GA_ID] = true;
+    // Удаляем cookies Google Analytics (_ga, _ga_…) для этого домена и его родительских доменов.
+    var parts = location.hostname.split(".");
+    var domains = [""];
+    for (var i = 0; i < parts.length - 1; i++) domains.push("; domain=." + parts.slice(i).join("."));
+    document.cookie.split(";").forEach(function (c) {
+      var name = c.split("=")[0].trim();
+      if (name === "_ga" || name.indexOf("_ga_") === 0 || name === "_gid" || name === "_gat") {
+        domains.forEach(function (d) { document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/" + d; });
+      }
+    });
+  }
+  function showBanner(show) {
+    if (banner) banner.hidden = !show;
+  }
+
+  if (GA_ID && banner) {
+    var consent = getConsent();
+    if (consent === "granted") loadAnalytics();
+    else if (consent !== "denied") showBanner(true);
+
+    banner.addEventListener("click", function (e) {
+      var btn = e.target.closest("[data-consent]");
+      if (!btn) return;
+      var value = btn.getAttribute("data-consent");
+      var was = getConsent();
+      setConsent(value);
+      showBanner(false);
+      if (value === "granted") loadAnalytics();
+      else {
+        removeAnalytics();
+        // Если аналитика уже работала на этой странице — перезагрузим её без аналитики.
+        if (was === "granted" && window.__avGaLoaded) location.reload();
+      }
+    });
+    document.querySelectorAll(".consent-open").forEach(function (b) {
+      b.addEventListener("click", function () { showBanner(true); banner.querySelector("[data-consent]").focus(); });
+    });
+  }
+
   // ---------- Фильтры каталога ----------
   var filters = document.querySelector(".filters");
   if (filters) {
