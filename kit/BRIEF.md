@@ -64,7 +64,7 @@
 - Подписи/аннотации — курсив.
 
 **Элементы**
-- Текстуру кожи НЕ использовать (обложки переделаны на ровный зелёный). `design/textures/leather.jpg` не нужен.
+- Текстуру кожи НЕ использовать: обложки переделаны на ровный зелёный фон.
 - Рамка: двойная золотая линия (толстая + тонкая с отступом), по углам hero — `design/ornaments/corner.svg` (зеркалить для других углов).
 - Эмблема `design/ornaments/emblem.svg` — в шапке (маленькая) и в hero (крупная). Из неё же сделать favicon.
 - Разделители между разделами — `divider.svg`; маленький штурвал `wheel.svg` — маркер/иконка; `ship.svg` — тонкий рисунок яхты (как на задней обложке) — для футера или пустых состояний.
@@ -101,6 +101,5 @@ previews/                — по 3 превью страниц на книгу 
 samples/<id>/            — preface.html, excerpt.html (2–3 страницы) + рисунки
 design/fonts/            — EB Garamond (OFL)
 design/ornaments/        — emblem, corner, divider, wheel, rosette, cartouche, ship (SVG)
-design/textures/leather.jpg
 design/photos/           — ч/б фото из журнала (как на обложках)
 ```
