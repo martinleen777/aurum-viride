@@ -49,6 +49,11 @@ const ids = new Set();
 BOOKS.forEach((b) => { if (ids.has(b.id)) fail(`id «${b.id}» встречается дважды`); ids.add(b.id); });
 
 const isJournal = (b) => !!b._series.journal;
+// Каждая языковая версия сайта показывает только книги на своём языке.
+const booksIn = (lang) => BOOKS.filter((b) => b.language === lang);
+// Одна и та же книга на разных языках: серия + том (у номеров журнала — id без языкового окончания).
+const editionKey = (b) => (isJournal(b) ? b.id.replace(/-(en|de|ru)$/, "") : `${b.series}|${b.volume || 0}`);
+const editionsOf = (b) => BOOKS.filter((x) => x !== b && editionKey(x) === editionKey(b));
 const formatsOf = (b) => b.formats || [];
 const hasPrint = (b) => formatsOf(b).some((f) => f !== "ebook");
 const hasEbook = (b) => formatsOf(b).includes("ebook");
@@ -78,8 +83,8 @@ function storeLinks(b) {
 function storeButtons(b, lang) {
   const links = storeLinks(b);
   if (!links.length) return `<div class="stores"><span class="store store--soon" aria-disabled="true">${T[lang].coming_soon}</span></div>`;
-  return `<div class="stores">${links.map((l) =>
-    `<a class="store" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label || T[lang].other_link)}</a>`).join("")}</div>`;
+  return `<div class="stores">${links.map((l, i) =>
+    `<a class="store${i ? "" : " store--primary"}" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label || T[lang].other_link)}</a>`).join("")}</div>`;
 }
 
 function formatPrice(price, lang) {
@@ -106,35 +111,21 @@ const subline = (b) => b.volume_title || b.issue || "";
 const fullTitle = (b) => [b.title, subline(b)].filter(Boolean).join(" — ");
 
 // ---------- разметка ----------
-const EMBLEM_SRC = fs.readFileSync(path.join(KIT, "design/ornaments/emblem.svg"), "utf8")
-  .replace(/<\?xml[^>]*>/, "").trim();
-let emblemSeq = 0;
-function emblem(cls) {
-  const id = "emg" + ++emblemSeq;
-  return EMBLEM_SRC
-    .replace(/id="g1"/g, `id="${id}"`).replace(/url\(#g1\)/g, `url(#${id})`)
-    .replace("<svg ", `<svg class="${cls}" aria-hidden="true" focusable="false" `);
-}
-
 function picture(b, root, { sizes = "(max-width: 600px) 45vw, 220px", eager = false } = {}) {
   const alt = esc(fullTitle(b));
   const webp = kitExists(b.cover_web) ? `<source type="image/webp" srcset="${root}${b.cover_web} 640w" sizes="${sizes}">` : "";
   return `<picture>${webp}<img src="${root}${b.cover}" srcset="${root}${b.cover} 1600w" sizes="${sizes}" width="640" height="1024" alt="${alt}"${eager ? "" : ' loading="lazy"'} decoding="async"></picture>`;
 }
 
-function langBadge(code) {
-  return `<span class="lang-badge" title="${esc(LANG_NAMES[code])}">${code.toUpperCase()}</span>`;
-}
-
 function card(b, lang, root, showSeries) {
   const s = b._series;
-  const meta = isJournal(b) ? (b.issue || "") : [showSeries ? s.name[lang] : "", b.volume ? `${T[lang].volume} ${roman(b.volume)}` : ""].filter(Boolean).join(" · ");
+  const meta = isJournal(b) ? (b.issue || "") : [showSeries && s.name[lang] !== b.title ? s.name[lang] : "", b.volume ? `${T[lang].volume} ${roman(b.volume)}` : ""].filter(Boolean).join(" · ");
   const fmt = [hasPrint(b) ? "print" : "", hasEbook(b) ? "ebook" : ""].filter(Boolean).join(" ");
   return `<li class="card" data-series="${b.series}" data-lang="${b.language}" data-format="${fmt}">
 <a href="${root}${lang}/books/${b.id}/">
 <span class="card-cover">${picture(b, root)}</span>
 <span class="card-title" lang="${b.language}">${esc(b.title)}</span>
-<span class="card-meta">${langBadge(b.language)}${meta ? ` <span lang="${isJournal(b) ? b.language : lang}">${esc(meta)}</span>` : ""}</span>
+${meta ? `<span class="card-meta">${esc(meta)}</span>` : ""}
 </a></li>`;
 }
 
@@ -144,17 +135,15 @@ function grid(list, lang, root, cls = "", showSeries = false) {
   return `<ul class="grid ${cls}">${list.map((b) => card(b, lang, root, showSeries)).join("")}</ul>`;
 }
 
-function divider(root) {
-  return `<div class="divider" aria-hidden="true"><img src="${root}assets/orn/divider.svg" alt="" width="600" height="120"></div>`;
-}
-
-function layout({ lang, rel, title, description, body, root, ogImage, ogType = "website", jsonld, noindex = false, alternates = true }) {
+// alts — адреса этой же страницы на других языках: { en: "books/x/", de: "books/y/" }.
+// Если версии на каком-то языке нет, переключатель языка ведёт на главную этого языка.
+const SITEMAP = [];
+function layout({ lang, rel, title, description, body, root, ogImage, ogType = "website", jsonld, noindex = false, alts }) {
   const t = T[lang];
   const pageUrl = `${SITE_URL}/${lang}/${rel}`;
-  const alt = alternates
-    ? LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${SITE_URL}/${l}/${rel}">`).join("\n") +
-      `\n<link rel="alternate" hreflang="x-default" href="${SITE_URL}/${DEFAULT_LANG}/${rel}">`
-    : "";
+  alts = alts || Object.fromEntries(LANGS.map((l) => [l, rel]));
+  if (!noindex) SITEMAP.push({ lang, rel, alts });
+  const alt = noindex ? "" : hreflangLinks(alts).map(([l, href]) => `<link rel="alternate" hreflang="${l}" href="${href}">`).join("\n");
   const nav = [
     ["", t.nav_home],
     ["books/", t.nav_books],
@@ -164,7 +153,7 @@ function layout({ lang, rel, title, description, body, root, ogImage, ogType = "
     return `<a href="${root}${lang}/${href}"${current ? ' aria-current="page"' : ""}>${label}</a>`;
   }).join("");
   const switcher = LANGS.map((l) =>
-    `<a href="${root}${l}/${rel}" hreflang="${l}" lang="${l}"${l === lang ? ' aria-current="true"' : ""} title="${LANG_NAMES[l]}">${l.toUpperCase()}</a>`).join("");
+    `<a href="${root}${l}/${alts[l] ?? ""}" hreflang="${l}" lang="${l}"${l === lang ? ' aria-current="true"' : ""} title="${LANG_NAMES[l]}">${l.toUpperCase()}</a>`).join("");
   const fullTitle = title ? `${title} — ${NAME}` : `${NAME} — ${t.motto}`;
   const img = ogImage || `${SITE_URL}/assets/img/icon-512.png`;
 
@@ -186,10 +175,9 @@ ${alt}
 <meta property="og:locale" content="${LOCALES[lang]}">
 ${LANGS.filter((l) => l !== lang).map((l) => `<meta property="og:locale:alternate" content="${LOCALES[l]}">`).join("\n")}
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#0f261c">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="${root}assets/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="${root}assets/img/apple-touch-icon.png">
-<link rel="preload" href="${root}assets/fonts/EBGaramond-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${root}assets/style.css">
 ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, "\\u003c")}</script>` : ""}
 <script src="${root}assets/site.js" defer></script>
@@ -198,7 +186,7 @@ ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld).replace(
 <a class="skip" href="#main">${t.skip}</a>
 <header class="site-header">
 <div class="wrap header-inner">
-<a class="brand" href="${root}${lang}/">${emblem("brand-emblem")}<span class="brand-name">${NAME}</span></a>
+<a class="brand" href="${root}${lang}/">${NAME}</a>
 <nav class="nav" aria-label="${esc(t.nav_home)}">${nav}</nav>
 <nav class="langs" aria-label="${esc(t.language)}">${switcher}</nav>
 </div>
@@ -208,7 +196,6 @@ ${body}
 </main>
 <footer class="site-footer">
 <div class="wrap footer-inner">
-<div class="footer-ship" aria-hidden="true"></div>
 <p class="footer-name">${NAME}</p>
 <p class="footer-motto">${esc(t.motto)}</p>
 <nav class="footer-links"><a href="${root}${lang}/books/">${t.nav_books}</a><a href="${root}${lang}/about/">${t.nav_about}</a><a href="${root}${lang}/impressum/">${t.impressum}</a><a href="${root}${lang}/privacy/">${t.privacy}</a></nav>
@@ -219,44 +206,71 @@ ${body}
 `;
 }
 
+function hreflangLinks(alts) {
+  const list = LANGS.filter((l) => alts[l] != null).map((l) => [l, `${SITE_URL}/${l}/${alts[l]}`]);
+  if (list.length > 1) list.push(["x-default", `${SITE_URL}/${alts[DEFAULT_LANG] != null ? DEFAULT_LANG : list[0][0]}/${alts[DEFAULT_LANG] ?? alts[list[0][0]]}`]);
+  return list.length > 1 ? list : [];
+}
+
 const rootFor = (lang, rel) => "../".repeat(1 + rel.split("/").filter(Boolean).length);
 
 // ---------- страницы ----------
 function homePage(lang) {
   const t = T[lang], rel = "", root = rootFor(lang, rel);
-  const seriesBlocks = SERIES.map((s) => {
-    const books = sortFor(lang, BOOKS.filter((b) => b.series === s.id));
-    if (!books.length) return "";
-    return `<section class="series-block${s.journal ? " journal" : ""}">
+  const sorted = sortFor(lang, booksIn(lang));
+  const inSeries = (id) => sorted.filter((b) => b.series === id);
+
+  // Веер обложек под заголовком: по книге из каждой серии, на языке версии — в центре.
+  const bb = inSeries("building-boats"), oar = inSeries("under-oar-and-sail"), ws = inSeries("wassersport-1885-issues");
+  const fan = [ws[0], oar.find((b) => b.volume === 1), bb[0], oar.find((b) => b.volume === 2), ws[1]].filter(Boolean);
+  const hero = `<section class="hero">
 <div class="wrap">
-<header class="series-head">
-<p class="eyebrow">${t.series}</p>
-<h2><a href="${root}${lang}/series/${s.id}/">${esc(s.name[lang])}</a></h2>
-<p class="series-text">${esc(s.text[lang])}</p>
-</header>
-${grid(books, lang, root, s.journal ? "grid--journal" : "")}
-<p class="more"><a href="${root}${lang}/series/${s.id}/">${t.view_series} →</a></p>
+<p class="hero-kicker">${NAME}</p>
+<h1 class="hero-title">${esc(t.motto)}</h1>
+<p class="hero-lead">${esc(t.hero_lead)}</p>
+<p class="hero-actions"><a class="btn btn--primary" href="${root}${lang}/books/">${t.to_catalog}</a><a class="btn btn--link" href="${root}${lang}/about/">${t.about_project} ›</a></p>
+</div>
+<div class="hero-fan">${fan.map((b, i) => `<a class="fan-item fan-d${Math.abs(i - Math.floor(fan.length / 2))}" href="${root}${lang}/books/${b.id}/" tabindex="-1">${picture(b, root, { sizes: "(max-width: 600px) 40vw, 260px", eager: true })}</a>`).join("")}</div>
+</section>`;
+
+  // Серия из одной книги показывается крупным блоком «Рекомендуем», остальные — полкой обложек.
+  const featured = (f) => `<section class="featured">
+<div class="wrap featured-inner">
+<a class="featured-cover" href="${root}${lang}/books/${f.id}/">${picture(f, root, { sizes: "(max-width: 760px) 60vw, 380px" })}</a>
+<div class="featured-text">
+<p class="eyebrow">${t.featured}</p>
+<h2 lang="${f.language}">${esc(f.title)}</h2>
+${f.subtitle ? `<p class="featured-sub" lang="${f.language}">${esc(f.subtitle)}</p>` : ""}
+${(f.blurb || [])[0] ? `<p class="featured-blurb" lang="${f.language}">${esc(f.blurb[0])}</p>` : ""}
+<p class="hero-actions"><a class="btn btn--primary" href="${root}${lang}/books/${f.id}/">${t.more_about_book}</a></p>
+</div>
 </div>
 </section>`;
-  }).join(divider(root));
 
-  const body = `<section class="hero">
-<div class="hero-frame">
-<img class="corner c-tl" src="${root}assets/orn/corner.svg" alt="" aria-hidden="true">
-<img class="corner c-tr" src="${root}assets/orn/corner.svg" alt="" aria-hidden="true">
-<img class="corner c-bl" src="${root}assets/orn/corner.svg" alt="" aria-hidden="true">
-<img class="corner c-br" src="${root}assets/orn/corner.svg" alt="" aria-hidden="true">
-${emblem("hero-emblem")}
-<h1 class="gold hero-title">${NAME}</h1>
-<p class="hero-motto">${esc(t.motto)}</p>
+  const seriesBlocks = SERIES.map((s) => {
+    const books = inSeries(s.id);
+    if (!books.length) return "";
+    if (books.length === 1) return featured(books[0]);
+    return `<section class="shelf">
+<div class="wrap">
+<header class="shelf-head">
+<h2><a href="${root}${lang}/series/${s.id}/">${esc(s.name[lang])}</a></h2>
+<p>${esc(s.text[lang])}</p>
+</header>
 </div>
-</section>
-${seriesBlocks}
-${divider(root)}
-<section class="wrap about-short">
-<h2 class="gold">${t.about_project}</h2>
+<div class="shelf-row">${grid(books, lang, root, "row")}</div>
+<p class="more"><a href="${root}${lang}/series/${s.id}/">${t.view_series} ›</a></p>
+</section>`;
+  });
+
+  const body = `${hero}
+${seriesBlocks.join("\n")}
+<section class="about-short">
+<div class="wrap">
+<h2>${t.about_project}</h2>
 <p>${ABOUT[lang]}</p>
-<p><a class="btn" href="${root}${lang}/books/">${t.to_catalog}</a></p>
+<p><a class="btn btn--outline" href="${root}${lang}/about/">${t.about_project} ›</a></p>
+</div>
 </section>`;
   write(`${lang}/index.html`, layout({ lang, rel, root, title: "", description: t.motto, body,
     jsonld: { "@context": "https://schema.org", "@type": "WebSite", name: NAME, url: `${SITE_URL}/${lang}/`, inLanguage: lang } }));
@@ -264,22 +278,24 @@ ${divider(root)}
 
 function catalogPage(lang) {
   const t = T[lang], rel = "books/", root = rootFor(lang, rel);
+  const books = sortFor(lang, booksIn(lang));
   const group = (name, label, items) =>
     `<div class="filter" role="group" aria-label="${esc(label)}" data-filter="${name}"><span class="filter-label">${label}</span>` +
     [["", t.all], ...items].map(([v, l], i) => `<button type="button" class="chip" data-value="${v}" aria-pressed="${i ? "false" : "true"}">${esc(l)}</button>`).join("") +
     "</div>";
-  const usedLangs = sortLangs(lang, [...new Set(BOOKS.map((b) => b.language))]);
+  const series = SERIES.filter((s) => books.some((b) => b.series === s.id));
+  const bothFormats = books.some(hasPrint) && books.some(hasEbook);
+  const filters = [
+    series.length > 1 ? group("series", t.series, series.map((s) => [s.id, s.name[lang]])) : "",
+    bothFormats ? group("format", t.format_filter, [["print", t.print], ["ebook", t.ebook]]) : "",
+  ].filter(Boolean).join("\n");
   const body = `<div class="wrap page">
 <header class="page-head">
-<h1 class="gold">${t.catalog}</h1>
+<h1>${t.catalog}</h1>
 <p class="lead">${t.catalog_intro}</p>
 </header>
-<div class="filters" hidden>
-${group("series", t.series, SERIES.filter((s) => BOOKS.some((b) => b.series === s.id)).map((s) => [s.id, s.name[lang]]))}
-${group("lang", t.lang_filter, usedLangs.map((l) => [l, l.toUpperCase()]))}
-${group("format", t.format_filter, [["print", t.print], ["ebook", t.ebook]])}
-</div>
-${grid(sortFor(lang, BOOKS), lang, root, "catalog", true)}
+${filters ? `<div class="filters" hidden>\n${filters}\n</div>` : ""}
+${grid(books, lang, root, "catalog", true)}
 <p class="empty" hidden>${t.nothing_found}</p>
 </div>`;
   write(`${lang}/books/index.html`, layout({ lang, rel, root, title: t.catalog, description: t.catalog_intro, body }));
@@ -291,16 +307,16 @@ function sortLangs(lang, list) {
 
 function seriesPage(lang, s) {
   const t = T[lang], rel = `series/${s.id}/`, root = rootFor(lang, rel);
-  const books = sortFor(lang, BOOKS.filter((b) => b.series === s.id));
+  const books = sortFor(lang, booksIn(lang).filter((b) => b.series === s.id));
   const photo = s.photo
-    ? `<figure class="framed-photo"><picture><source type="image/webp" srcset="${root}assets/img/${s.photo}.webp"><img src="${root}assets/img/${s.photo}.jpg" alt="" loading="lazy"></picture></figure>`
+    ? `<figure class="photo"><picture><source type="image/webp" srcset="${root}assets/img/${s.photo}.webp"><img src="${root}assets/img/${s.photo}.jpg" alt="" loading="lazy"></picture></figure>`
     : "";
   const body = `<div class="${s.journal ? "journal " : ""}series-page">
 <div class="wrap page">
 <header class="page-head series-intro">
 <div>
 <p class="eyebrow">${t.series}</p>
-<h1 class="${s.journal ? "" : "gold"}">${esc(s.name[lang])}</h1>
+<h1>${esc(s.name[lang])}</h1>
 <p class="lead">${esc(s.text[lang])}</p>
 </div>
 ${photo}
@@ -309,7 +325,8 @@ ${photo}
 ${grid(books, lang, root, s.journal ? "grid--journal" : "")}
 </div>
 </div>`;
-  write(`${lang}/${rel}index.html`, layout({ lang, rel, root, title: s.name[lang], description: s.text[lang], body,
+  const alts = Object.fromEntries(LANGS.filter((l) => booksIn(l).some((b) => b.series === s.id)).map((l) => [l, rel]));
+  write(`${lang}/${rel}index.html`, layout({ lang, rel, root, title: s.name[lang], description: s.text[lang], body, alts,
     ogImage: books[0] ? `${SITE_URL}/${books[0].cover}` : undefined }));
 }
 
@@ -365,7 +382,7 @@ function bookPage(lang, b) {
     : bigCover(b, root);
 
   const specs = [
-    [t.lang_of_book, `${langBadge(bl)} ${esc(t.book_lang[bl])}`],
+    [t.lang_of_book, esc(t.book_lang[bl])],
     b.pages ? [t.pages, esc(b.pages)] : null,
     (b.trim_in || formatsOf(b).length) ? [t.format, [trimText(b, lang), formatsText(b, lang)].filter(Boolean).map((x) => `<span class="nowrap">${esc(x)}</span>`).join("<br>")] : null,
     ...Object.entries(b.isbn || {}).filter(([, v]) => v).map(([k, v]) => [`${t.isbn} (${k === "ebook" ? t.ebook : t.paperback})`, esc(v)]),
@@ -402,13 +419,14 @@ function bookPage(lang, b) {
 <ol class="toc" lang="${bl}">${contentsList.map((c) => `<li>${esc(c)}</li>`).join("")}</ol>
 </section>` : "";
 
-  // Другие издания (та же книга на других языках) и второй том на том же языке.
-  const others = isJournal(b) ? [] :
-    sortFor(lang, BOOKS.filter((x) => x !== b && x.series === b.series && (x.volume || null) === (b.volume || null)));
+  // Эта же книга на других языках — ссылками; второй том и другие номера — обложками.
+  const editions = sortLangs(lang, editionsOf(b).map((x) => x.language)).map((l) => editionsOf(b).find((x) => x.language === l));
+  const alsoIn = editions.length
+    ? `<p class="also-in">${t.also_in}: ${editions.map((x) => `<a href="${root}${x.language}/books/${x.id}/" hreflang="${x.language}" lang="${x.language}">${esc(LANG_NAMES[x.language])}</a>`).join(" · ")}</p>`
+    : "";
   const otherVol = isJournal(b) ? [] : BOOKS.filter((x) => x.series === b.series && x.language === bl && x.volume && b.volume && x.volume !== b.volume);
-  const moreIssues = isJournal(b) ? sortFor(lang, BOOKS.filter((x) => x !== b && x.series === b.series)) : [];
+  const moreIssues = isJournal(b) ? sortFor(lang, booksIn(lang).filter((x) => x !== b && x.series === b.series)) : [];
   const related = [
-    others.length ? `<h2 class="section-title">${t.other_editions}</h2>${grid(others, lang, root)}` : "",
     otherVol.length ? `<h2 class="section-title">${t.other_volume}</h2>${grid(otherVol, lang, root)}` : "",
     moreIssues.length ? `<h2 class="section-title">${t.more_issues}</h2>${grid(moreIssues, lang, root, "grid--journal")}` : "",
   ].filter(Boolean).join("");
@@ -418,24 +436,26 @@ function bookPage(lang, b) {
 <div class="book-cover">${cover}</div>
 <div class="book-info">
 <p class="eyebrow"><a href="${root}${lang}/series/${s.id}/">${esc(s.name[lang])}</a></p>
-<h1 class="book-title${isJournal(b) ? "" : " gold"}" lang="${bl}">${esc(b.title)}</h1>
+<h1 class="book-title" lang="${bl}">${esc(b.title)}</h1>
 ${subline(b) ? `<p class="book-volume" lang="${bl}">${esc(subline(b))}</p>` : ""}
 ${b.subtitle ? `<p class="book-subtitle" lang="${bl}">${esc(b.subtitle)}</p>` : ""}
 ${b.editor_credit ? `<p class="book-credit" lang="${bl}">${esc(b.editor_credit)}</p>` : ""}
 <dl class="specs">${specs}</dl>
 ${blurb}
 ${storeButtons(b, lang)}
+${alsoIn}
 </div>
 </div>
 ${look}
-${prefaceBlock ? divider(root) + prefaceBlock : ""}
+${prefaceBlock}
 ${excerptBlock}
 ${contents}
-${related ? `${divider(root)}<section class="wrap section related">${related}</section>` : ""}
+${related ? `<section class="wrap section related">${related}</section>` : ""}
 </div>`;
 
   const desc = clip(stripTags(b.subtitle || (b.blurb || [])[0] || fullTitle(b)), 180);
-  write(`${lang}/${rel}index.html`, layout({ lang, rel, root, title: fullTitle(b), description: desc, body,
+  const alts = { [lang]: rel, ...Object.fromEntries(editions.map((x) => [x.language, `books/${x.id}/`])) };
+  write(`${lang}/${rel}index.html`, layout({ lang, rel, root, title: fullTitle(b), description: desc, body, alts,
     ogType: "book", ogImage: `${SITE_URL}/${b.cover}`, jsonld: bookJsonLd(b, lang) }));
 }
 
@@ -448,16 +468,16 @@ function bigCover(b, root) {
 function aboutPage(lang) {
   const t = T[lang], rel = "about/", root = rootFor(lang, rel);
   const body = `<div class="wrap page about">
-<header class="page-head"><h1 class="gold">${t.about_project}</h1></header>
+<header class="page-head"><h1>${t.about_project}</h1></header>
 <div class="about-grid">
 <div class="about-text"><p>${ABOUT[lang]}</p></div>
-<figure class="framed-photo"><picture><source type="image/webp" srcset="${root}assets/img/thistle.webp"><img src="${root}assets/img/thistle.jpg" alt="" loading="lazy"></picture></figure>
+<figure class="photo"><picture><source type="image/webp" srcset="${root}assets/img/thistle.webp"><img src="${root}assets/img/thistle.jpg" alt="" loading="lazy"></picture></figure>
 </div>
 <div class="about-photos">
-<figure class="framed-photo"><picture><source type="image/webp" srcset="${root}assets/img/wiking.webp"><img src="${root}assets/img/wiking.jpg" alt="" loading="lazy"></picture></figure>
-<figure class="framed-photo"><picture><source type="image/webp" srcset="${root}assets/img/hertha.webp"><img src="${root}assets/img/hertha.jpg" alt="" loading="lazy"></picture></figure>
+<figure class="photo"><picture><source type="image/webp" srcset="${root}assets/img/wiking.webp"><img src="${root}assets/img/wiking.jpg" alt="" loading="lazy"></picture></figure>
+<figure class="photo"><picture><source type="image/webp" srcset="${root}assets/img/hertha.webp"><img src="${root}assets/img/hertha.jpg" alt="" loading="lazy"></picture></figure>
 </div>
-<p class="center"><a class="btn" href="${root}${lang}/books/">${t.to_catalog}</a></p>
+<p class="center"><a class="btn btn--primary" href="${root}${lang}/books/">${t.to_catalog}</a></p>
 </div>`;
   write(`${lang}/${rel}index.html`, layout({ lang, rel, root, title: t.about_project, description: clip(stripTags(ABOUT[lang]), 180), body }));
 }
@@ -475,23 +495,18 @@ fs.mkdirSync(OUT, { recursive: true });
 copyDir(path.join(KIT, "covers"), "covers");
 copyDir(path.join(KIT, "previews"), "previews");
 copyDir(path.join(KIT, "samples"), "samples");
-for (const f of ["corner", "divider", "wheel", "ship"]) {
-  fs.mkdirSync(path.join(OUT, "assets/orn"), { recursive: true });
-  fs.copyFileSync(path.join(KIT, `design/ornaments/${f}.svg`), path.join(OUT, `assets/orn/${f}.svg`));
-}
 copyDir(path.join(SRC, "static"), "assets");
 fs.copyFileSync(path.join(SRC, "style.css"), path.join(OUT, "assets/style.css"));
 fs.copyFileSync(path.join(SRC, "site.js"), path.join(OUT, "assets/site.js"));
 // HTML-фрагменты отрывков встраиваются в страницы — отдельно их не публикуем.
 for (const b of BOOKS) for (const k of ["preface", "excerpt"]) if (kitExists(b[k])) fs.rmSync(path.join(OUT, b[k]), { force: true });
 
-const pages = [];
 for (const lang of LANGS) {
-  homePage(lang); pages.push("");
-  catalogPage(lang); pages.push("books/");
-  for (const s of SERIES) if (BOOKS.some((b) => b.series === s.id)) { seriesPage(lang, s); if (lang === LANGS[0]) pages.push(`series/${s.id}/`); }
-  for (const b of BOOKS) { bookPage(lang, b); if (lang === LANGS[0]) pages.push(`books/${b.id}/`); }
-  aboutPage(lang); pages.push("about/");
+  homePage(lang);
+  catalogPage(lang);
+  for (const s of SERIES) if (booksIn(lang).some((b) => b.series === s.id)) seriesPage(lang, s);
+  for (const b of booksIn(lang)) bookPage(lang, b);
+  aboutPage(lang);
   legalPage(lang, "impressum", IMPRESSUM[lang], "Impressum");
   legalPage(lang, "privacy", PRIVACY[lang], T[lang].privacy);
 }
@@ -505,26 +520,25 @@ ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${SITE_URL}/${l}
 <link rel="alternate" hreflang="x-default" href="${SITE_URL}/${DEFAULT_LANG}/">
 <meta http-equiv="refresh" content="0; url=${DEFAULT_LANG}/">
 <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
-<style>body{background:#17372a;color:#ead9ad;font-family:Georgia,serif;text-align:center;padding:4rem 1rem}a{color:#e7c46c}</style>
+<style>body{background:#fff;color:#1d1d1f;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;text-align:center;padding:4rem 1rem}a{color:#1f6f50}</style>
 </head><body><p><a href="en/">English</a> · <a href="de/">Deutsch</a> · <a href="ru/">Русский</a></p></body></html>
 `);
 
 // 404: GitHub Pages показывает её по любому адресу, поэтому пути — от корня сайта.
-write("404.html", layout({ lang: "en", rel: "404/", root: BASE_PATH, title: T.en.not_found, description: T.en.not_found_text, noindex: true, alternates: false,
+write("404.html", layout({ lang: "en", rel: "404/", root: BASE_PATH, title: T.en.not_found, description: T.en.not_found_text, noindex: true,
   body: `<div class="wrap page notfound">
-<h1 class="gold">404</h1>
+<h1>404</h1>
 ${LANGS.map((l) => `<p lang="${l}">${T[l].not_found}. <a href="${BASE_PATH}${l}/">${T[l].back_home}</a></p>`).join("\n")}
 </div>` }).replace(/<nav class="langs"[\s\S]*?<\/nav>/, ""));
 
 // sitemap.xml и robots.txt
 write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${LANGS.flatMap((lang) => [...new Set(pages)].map((rel) => `<url><loc>${SITE_URL}/${lang}/${rel}</loc>
-${LANGS.map((l) => `<xhtml:link rel="alternate" hreflang="${l}" href="${SITE_URL}/${l}/${rel}"/>`).join("")}<xhtml:link rel="alternate" hreflang="x-default" href="${SITE_URL}/${DEFAULT_LANG}/${rel}"/></url>`)).join("\n")}
+${SITEMAP.map(({ lang, rel, alts }) => `<url><loc>${SITE_URL}/${lang}/${rel}</loc>${hreflangLinks(alts).map(([l, href]) => `<xhtml:link rel="alternate" hreflang="${l}" href="${href}"/>`).join("")}</url>`).join("\n")}
 </urlset>
 `);
 write("robots.txt", `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 if (data.domain) write("CNAME", data.domain + "\n");
 write(".nojekyll", "");
 
-console.log(`Готово: ${BOOKS.length} книг × ${LANGS.length} языка → ${path.relative(ROOT, OUT)}/  (адрес сайта: ${SITE_URL})`);
+console.log(`Готово: ${BOOKS.length} книг, ${SITEMAP.length} страниц → ${path.relative(ROOT, OUT)}/  (адрес сайта: ${SITE_URL})`);

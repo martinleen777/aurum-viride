@@ -55,6 +55,8 @@ export const SERIES = [
 
 export const T = {
   en: {
+    hero_lead: "Rowing, sailing and boatbuilding from the Berlin weekly Wassersport, 1883–1895 — in English, German and Russian.",
+    featured: "Featured", more_about_book: "Learn more",
     motto: "Forgotten pages from the golden age of rowing and sailing",
     nav_home: "Home", nav_books: "Books", nav_about: "About",
     impressum: "Impressum", privacy: "Privacy",
@@ -63,7 +65,8 @@ export const T = {
     series: "Series", all: "All", lang_filter: "Language", format_filter: "Format",
     print: "Print", ebook: "E-book",
     paperback: "Paperback",
-    catalog: "Catalogue", catalog_intro: "All books and journal issues. Every book is marked with its language.",
+    catalog: "Catalogue", catalog_intro: "All our books and journal issues in English.",
+    also_in: "This book in other languages",
     to_catalog: "Browse the catalogue",
     series_books: "Books in this series",
     view_series: "View the series",
@@ -91,6 +94,8 @@ export const T = {
     back_home: "Back to the home page",
   },
   de: {
+    hero_lead: "Rudern, Segeln und Bootsbau aus der Berliner Wochenschrift Wassersport, 1883–1895 — auf Deutsch, Englisch und Russisch.",
+    featured: "Empfehlung", more_about_book: "Mehr erfahren",
     motto: "Vergessene Seiten aus dem goldenen Zeitalter des Ruderns und Segelns",
     nav_home: "Start", nav_books: "Bücher", nav_about: "Über",
     impressum: "Impressum", privacy: "Datenschutz",
@@ -99,7 +104,8 @@ export const T = {
     series: "Reihe", all: "Alle", lang_filter: "Sprache", format_filter: "Ausgabe",
     print: "Druck", ebook: "E-Book",
     paperback: "Taschenbuch",
-    catalog: "Katalog", catalog_intro: "Alle Bücher und Zeitschriftenausgaben. Bei jedem Buch ist die Sprache angegeben.",
+    catalog: "Katalog", catalog_intro: "Alle unsere Bücher und Zeitschriftenausgaben auf Deutsch.",
+    also_in: "Dieses Buch in anderen Sprachen",
     to_catalog: "Zum Katalog",
     series_books: "Bücher dieser Reihe",
     view_series: "Zur Reihe",
@@ -127,6 +133,8 @@ export const T = {
     back_home: "Zur Startseite",
   },
   ru: {
+    hero_lead: "Гребля, парусный спорт и постройка лодок по страницам берлинского еженедельника Wassersport, 1883–1895, — на русском, английском и немецком.",
+    featured: "Рекомендуем", more_about_book: "Подробнее",
     motto: "Забытые страницы золотого века гребли и парусного спорта",
     nav_home: "Главная", nav_books: "Книги", nav_about: "О проекте",
     impressum: "Impressum", privacy: "Конфиденциальность",
@@ -135,7 +143,8 @@ export const T = {
     series: "Серия", all: "Все", lang_filter: "Язык", format_filter: "Издание",
     print: "Печатное", ebook: "Электронное",
     paperback: "Мягкая обложка",
-    catalog: "Каталог", catalog_intro: "Все книги и номера журнала. У каждой книги указан её язык.",
+    catalog: "Каталог", catalog_intro: "Все наши книги на русском языке.",
+    also_in: "Эта книга на других языках",
     to_catalog: "Перейти в каталог",
     series_books: "Книги серии",
     view_series: "Вся серия",
