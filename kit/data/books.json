@@ -1,0 +1,561 @@
+{
+ "imprint": "Aurum Viride",
+ "domain": "aurumviride.com",
+ "books": [
+  {
+   "id": "building-boats-en",
+   "series": "building-boats",
+   "volume": null,
+   "language": "en",
+   "title": "Building Boats in the Golden Age",
+   "volume_title": null,
+   "subtitle": "Boatbuilding, design and fitting-out from the Berlin weekly Wassersport, 1883–1895",
+   "editor_credit": "Selected, translated and edited by L. Dudakov",
+   "back_title": "The Boatbuilder’s Craft in the Age of Sail and Oar",
+   "blurb": [
+    "Between 1883 and 1895 the Berlin weekly Wassersport was the meeting place of German oarsmen, canoeists and yachtsmen. Builders, designers and owners wrote in it about how their boats were made, rigged and kept.",
+    "This book gathers the best of those articles: rowing boats and oars, canoes and folding boats, centreboard and keel, spars, fittings and sails, ice yachts, fishermen’s craft, model yachts and small cruising yachts — with the journal’s plates redrawn as clear line drawings.",
+    "A rare first-hand record of traditional methods and practical experience, for everyone who builds, restores or simply loves boats."
+   ],
+   "contents": [
+    "Preface"
+   ],
+   "pages": 293,
+   "trim_in": [
+    8.5,
+    11
+   ],
+   "formats": [
+    "paperback",
+    "ebook"
+   ],
+   "cover": "covers/building-boats-en.jpg",
+   "cover_web": "covers/building-boats-en-640.webp",
+   "cover_wrap": "covers/building-boats-en-full-wrap.jpg",
+   "preface": "samples/building-boats-en/preface.html",
+   "excerpt": "samples/building-boats-en/excerpt.html",
+   "previews": [
+    "building-boats-en-p001.webp",
+    "building-boats-en-p006.webp",
+    "building-boats-en-p023.webp"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null,
+    "other": null
+   },
+   "isbn": {
+    "paperback": null,
+    "ebook": null
+   },
+   "price": null,
+   "availability": "coming soon"
+  },
+  {
+   "id": "bootsbau-de",
+   "series": "building-boats",
+   "volume": null,
+   "language": "de",
+   "title": "Bootsbau im Goldenen Zeitalter",
+   "volume_title": null,
+   "subtitle": "Bootsbau, Konstruktion und Ausrüstung aus der Berliner Wochenschrift Wassersport, 1883–1895",
+   "editor_credit": "Ausgewählt und herausgegeben von L. Dudakov",
+   "back_title": "Das Handwerk des Bootsbauers im Zeitalter von Segel und Ruder",
+   "blurb": [
+    "Von 1883 bis 1895 war die Berliner Wochenschrift Wassersport der Treffpunkt der deutschen Ruderer, Kanuten und Segler. Bootsbauer, Konstrukteure und Eigner schrieben dort, wie ihre Boote gebaut, getakelt und gepflegt wurden.",
+    "Dieses Buch vereint die besten dieser Beiträge: Ruderboote und Riemen, Kanus und Faltboote, Schwert und Kiel, Rundhölzer, Beschläge und Segel, Eisyachten, Fischerboote, Modellyachten und kleine Kreuzeryachten – mit den Tafeln des Journals, neu als klare Strichzeichnungen gezeichnet.",
+    "Ein seltenes Zeugnis aus erster Hand über traditionelle Methoden und praktische Erfahrung – für alle, die Boote bauen, restaurieren oder einfach lieben."
+   ],
+   "contents": [
+    "Vorwort"
+   ],
+   "pages": 366,
+   "trim_in": [
+    8.5,
+    11
+   ],
+   "formats": [
+    "paperback",
+    "ebook"
+   ],
+   "cover": "covers/bootsbau-de.jpg",
+   "cover_web": "covers/bootsbau-de-640.webp",
+   "cover_wrap": "covers/bootsbau-de-full-wrap.jpg",
+   "preface": "samples/bootsbau-de/preface.html",
+   "excerpt": "samples/bootsbau-de/excerpt.html",
+   "previews": [
+    "bootsbau-de-p001.webp",
+    "bootsbau-de-p006.webp",
+    "bootsbau-de-p023.webp"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null,
+    "other": null
+   },
+   "isbn": {
+    "paperback": null,
+    "ebook": null
+   },
+   "price": null,
+   "availability": "coming soon"
+  },
+  {
+   "id": "postroyka-lodok-ru",
+   "series": "building-boats",
+   "volume": null,
+   "language": "ru",
+   "title": "Постройка лодок в золотой век",
+   "volume_title": null,
+   "subtitle": "Постройка, проектирование и снаряжение лодок и яхт по страницам берлинского еженедельника Wassersport, 1883–1895",
+   "editor_credit": "Составитель и редактор Л. Дудаков",
+   "back_title": "Ремесло лодочного мастера в эпоху паруса и весла",
+   "blurb": [
+    "С 1883 по 1895 год берлинский еженедельник Wassersport был местом встречи немецких гребцов, каноистов и яхтсменов. Строители, конструкторы и владельцы рассказывали на его страницах, как строили, вооружали и содержали свои лодки.",
+    "В книгу вошли лучшие из этих статей: гребные лодки и вёсла, каноэ и складные лодки, шверт и киль, рангоут, дельные вещи и паруса, буеры, рыбачьи суда, модели яхт и малые крейсерские яхты. Чертежи журнала заново выполнены чёткой линией.",
+    "Редкое свидетельство из первых рук о традиционных приёмах и практическом опыте — для всех, кто строит, реставрирует или просто любит лодки."
+   ],
+   "contents": [
+    "Предисловие"
+   ],
+   "pages": 353,
+   "trim_in": [
+    8.5,
+    11
+   ],
+   "formats": [
+    "paperback",
+    "ebook"
+   ],
+   "cover": "covers/postroyka-lodok-ru.jpg",
+   "cover_web": "covers/postroyka-lodok-ru-640.webp",
+   "cover_wrap": "covers/postroyka-lodok-ru-full-wrap.jpg",
+   "preface": "samples/postroyka-lodok-ru/preface.html",
+   "excerpt": "samples/postroyka-lodok-ru/excerpt.html",
+   "previews": [
+    "postroyka-lodok-ru-p001.webp",
+    "postroyka-lodok-ru-p006.webp",
+    "postroyka-lodok-ru-p023.webp"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null,
+    "other": null
+   },
+   "isbn": {
+    "paperback": null,
+    "ebook": null
+   },
+   "price": null,
+   "availability": "coming soon (not on Amazon; Apple Books / other)"
+  },
+  {
+   "id": "under-oar-en",
+   "series": "under-oar-and-sail",
+   "volume": 1,
+   "language": "en",
+   "title": "Under Oar and Sail",
+   "volume_title": "Volume One · Under Oar",
+   "subtitle": "Voyages on rivers, lakes and canals from the Berlin weekly Wassersport, 1883–1895",
+   "editor_credit": "Selected, translated and edited by L. Dudakov",
+   "back_title": "River Journeys of the Nineteenth Century",
+   "blurb": [
+    "In the 1880s and 1890s the readers of the Berlin weekly Wassersport sent in the logs of their holidays on the water. Schoolboys rowed down the Oder, two canoeists paddled all the way to Vienna, oarsmen camped under canvas, and a family paddled three canoes down the Weser.",
+    "This volume collects seventeen of these accounts: journeys by rowing boat and canoe on the Danube, Rhine, Moselle, Neckar, Elbe and the waters of the Spreewald — told by the men who made them, with the photographs and drawings first printed in the journal.",
+    "Translated from the German, with an introduction to each voyage."
+   ],
+   "contents": [
+    "Preface"
+   ],
+   "pages": 260,
+   "trim_in": [
+    6,
+    9
+   ],
+   "formats": [
+    "paperback",
+    "ebook"
+   ],
+   "cover": "covers/under-oar-en.jpg",
+   "cover_web": "covers/under-oar-en-640.webp",
+   "cover_wrap": "covers/under-oar-en-full-wrap.jpg",
+   "preface": "samples/under-oar-en/preface.html",
+   "excerpt": "samples/under-oar-en/excerpt.html",
+   "previews": [
+    "under-oar-en-p001.webp",
+    "under-oar-en-p006.webp",
+    "under-oar-en-p141.webp"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null,
+    "other": null
+   },
+   "isbn": {
+    "paperback": null,
+    "ebook": null
+   },
+   "price": null,
+   "availability": "coming soon"
+  },
+  {
+   "id": "under-sail-en",
+   "series": "under-oar-and-sail",
+   "volume": 2,
+   "language": "en",
+   "title": "Under Oar and Sail",
+   "volume_title": "Volume Two · Under Sail",
+   "subtitle": "Voyages at sea and under sail from the Berlin weekly Wassersport, 1883–1895",
+   "editor_credit": "Selected, translated and edited by L. Dudakov",
+   "back_title": "Cutters and Yachts on the Baltic and the North Sea",
+   "blurb": [
+    "The second volume follows the readers of Wassersport out to sea. Berlin students take their newly bought cutter from Bremen to Hamburg, a Königsberg club sails to Bornholm, a German yachtsman winters on the Riviera, and the Emperor’s Meteor comes home from the Clyde.",
+    "Sixteen logs of voyages on the Baltic, the North Sea and beyond: gales off Hela, nights in the Wadden Sea, races at Kiel Week, and a three-tonner crossing the Channel to Brittany — with the journal’s engravings.",
+    "Translated from the German, with an introduction to each voyage."
+   ],
+   "contents": [
+    "Preface"
+   ],
+   "pages": 280,
+   "trim_in": [
+    6,
+    9
+   ],
+   "formats": [
+    "paperback",
+    "ebook"
+   ],
+   "cover": "covers/under-sail-en.jpg",
+   "cover_web": "covers/under-sail-en-640.webp",
+   "cover_wrap": "covers/under-sail-en-full-wrap.jpg",
+   "preface": "samples/under-sail-en/preface.html",
+   "excerpt": "samples/under-sail-en/excerpt.html",
+   "previews": [
+    "under-sail-en-p001.webp",
+    "under-sail-en-p006.webp",
+    "under-sail-en-p055.webp"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null,
+    "other": null
+   },
+   "isbn": {
+    "paperback": null,
+    "ebook": null
+   },
+   "price": null,
+   "availability": "coming soon"
+  },
+  {
+   "id": "unter-ruder-de",
+   "series": "under-oar-and-sail",
+   "volume": 1,
+   "language": "de",
+   "title": "Unter Ruder und Segel",
+   "volume_title": "Band I · Unter Ruder",
+   "subtitle": "Fahrten auf Flüssen, Seen und Kanälen aus der Berliner Wochenschrift Wassersport, 1883–1895",
+   "editor_credit": "Ausgewählt und herausgegeben von L. Dudakov",
+   "back_title": "Wasserwanderungen im neunzehnten Jahrhundert",
+   "blurb": [
+    "In den achtziger und neunziger Jahren des 19. Jahrhunderts schickten die Leser der Berliner Wochenschrift Wassersport die Fahrtenbücher ihrer Ferien auf dem Wasser ein. Schüler ruderten die Oder hinab, zwei Kanuten paddelten bis nach Wien, Ruderer zelteten am Ufer, und eine Familie fuhr in drei Kanus die Weser hinunter.",
+    "Dieser Band vereint siebzehn solcher Berichte: Fahrten im Ruderboot und Kanu auf Donau, Rhein, Mosel, Neckar, Elbe und den Gewässern des Spreewalds — erzählt von denen, die sie unternommen haben, mit den Abbildungen aus dem Journal.",
+    "Die Originaltexte in behutsam modernisierter Rechtschreibung, mit einer Einführung zu jeder Fahrt."
+   ],
+   "contents": [
+    "Vorwort"
+   ],
+   "pages": 304,
+   "trim_in": [
+    6,
+    9
+   ],
+   "formats": [
+    "paperback",
+    "ebook"
+   ],
+   "cover": "covers/unter-ruder-de.jpg",
+   "cover_web": "covers/unter-ruder-de-640.webp",
+   "cover_wrap": "covers/unter-ruder-de-full-wrap.jpg",
+   "preface": "samples/unter-ruder-de/preface.html",
+   "excerpt": "samples/unter-ruder-de/excerpt.html",
+   "previews": [
+    "unter-ruder-de-p001.webp",
+    "unter-ruder-de-p006.webp",
+    "unter-ruder-de-p161.webp"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null,
+    "other": null
+   },
+   "isbn": {
+    "paperback": null,
+    "ebook": null
+   },
+   "price": null,
+   "availability": "coming soon"
+  },
+  {
+   "id": "unter-segel-de",
+   "series": "under-oar-and-sail",
+   "volume": 2,
+   "language": "de",
+   "title": "Unter Ruder und Segel",
+   "volume_title": "Band II · Unter Segel",
+   "subtitle": "Fahrten auf See und unter Segel aus der Berliner Wochenschrift Wassersport, 1883–1895",
+   "editor_credit": "Ausgewählt und herausgegeben von L. Dudakov",
+   "back_title": "Kutter und Yachten auf Ostsee und Nordsee",
+   "blurb": [
+    "Der zweite Band folgt den Lesern des Wassersport hinaus auf See. Berliner Studenten überführen ihren eben gekauften Kutter von Bremen nach Hamburg, ein Königsberger Club segelt nach Bornholm, ein deutscher Yachtsegler überwintert an der Riviera, und des Kaisers Meteor kehrt vom Clyde heim.",
+    "Sechzehn Fahrtenberichte von Ostsee, Nordsee und darüber hinaus: Stürme vor Hela, Nächte im Wattenmeer, Regatten der Kieler Woche und ein Drei-Tonner, der über den Kanal in die Bretagne segelt — mit den Holzstichen des Journals.",
+    "Die Originaltexte in behutsam modernisierter Rechtschreibung, mit einer Einführung zu jeder Fahrt."
+   ],
+   "contents": [
+    "Vorwort"
+   ],
+   "pages": 327,
+   "trim_in": [
+    6,
+    9
+   ],
+   "formats": [
+    "paperback",
+    "ebook"
+   ],
+   "cover": "covers/unter-segel-de.jpg",
+   "cover_web": "covers/unter-segel-de-640.webp",
+   "cover_wrap": "covers/unter-segel-de-full-wrap.jpg",
+   "preface": "samples/unter-segel-de/preface.html",
+   "excerpt": "samples/unter-segel-de/excerpt.html",
+   "previews": [
+    "unter-segel-de-p001.webp",
+    "unter-segel-de-p006.webp",
+    "unter-segel-de-p062.webp"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null,
+    "other": null
+   },
+   "isbn": {
+    "paperback": null,
+    "ebook": null
+   },
+   "price": null,
+   "availability": "coming soon"
+  },
+  {
+   "id": "pod-veslom-ru",
+   "series": "under-oar-and-sail",
+   "volume": 1,
+   "language": "ru",
+   "title": "Под веслом и парусом",
+   "volume_title": "Том первый · Под веслом",
+   "subtitle": "Плавания по рекам, озёрам и каналам из берлинского еженедельника Wassersport, 1883–1895",
+   "editor_credit": "Составитель, переводчик и редактор Л. Дудаков",
+   "back_title": "Речные путешествия XIX века",
+   "blurb": [
+    "В 1880–1890-е годы читатели берлинского еженедельника Wassersport присылали в редакцию журналы своих отпусков на воде. Гимназисты спускались на вёслах по Одеру, двое каноистов дошли до самой Вены, гребцы ночевали в палатках, а одна семья спустилась на трёх каноэ по Везеру.",
+    "В этот том вошли семнадцать таких рассказов: путешествия на гребных лодках и каноэ по Дунаю, Рейну, Мозелю, Неккару, Эльбе и протокам Шпревальда — словами самих участников, с фотографиями и рисунками из журнала.",
+    "Перевод с немецкого, с вступлением к каждому плаванию."
+   ],
+   "contents": [
+    "Предисловие"
+   ],
+   "pages": 276,
+   "trim_in": [
+    6,
+    9
+   ],
+   "formats": [
+    "paperback",
+    "ebook"
+   ],
+   "cover": "covers/pod-veslom-ru.jpg",
+   "cover_web": "covers/pod-veslom-ru-640.webp",
+   "cover_wrap": "covers/pod-veslom-ru-full-wrap.jpg",
+   "preface": "samples/pod-veslom-ru/preface.html",
+   "excerpt": "samples/pod-veslom-ru/excerpt.html",
+   "previews": [
+    "pod-veslom-ru-p001.webp",
+    "pod-veslom-ru-p006.webp",
+    "pod-veslom-ru-p151.webp"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null,
+    "other": null
+   },
+   "isbn": {
+    "paperback": null,
+    "ebook": null
+   },
+   "price": null,
+   "availability": "coming soon (not on Amazon; Apple Books / other)"
+  },
+  {
+   "id": "pod-parusom-ru",
+   "series": "under-oar-and-sail",
+   "volume": 2,
+   "language": "ru",
+   "title": "Под веслом и парусом",
+   "volume_title": "Том второй · Под парусом",
+   "subtitle": "Плавания по морю и под парусом из берлинского еженедельника Wassersport, 1883–1895",
+   "editor_credit": "Составитель, переводчик и редактор Л. Дудаков",
+   "back_title": "Тендеры и яхты на Балтике и в Северном море",
+   "blurb": [
+    "Второй том уводит читателей Wassersport в море. Берлинские студенты перегоняют только что купленный тендер из Бремена в Гамбург, кёнигсбергский клуб идёт на Борнхольм, немецкий яхтсмен зимует на Ривьере, а императорский «Метеор» возвращается домой с Клайда.",
+    "Шестнадцать вахтенных журналов плаваний по Балтике, Северному морю и дальше: шторма у Хелы, ночи на ваттах, гонки Кильской недели и трёхтонник, пересекающий Ла-Манш до Бретани, — с гравюрами из журнала.",
+    "Перевод с немецкого, с вступлением к каждому плаванию."
+   ],
+   "contents": [
+    "Предисловие"
+   ],
+   "pages": 292,
+   "trim_in": [
+    6,
+    9
+   ],
+   "formats": [
+    "paperback",
+    "ebook"
+   ],
+   "cover": "covers/pod-parusom-ru.jpg",
+   "cover_web": "covers/pod-parusom-ru-640.webp",
+   "cover_wrap": "covers/pod-parusom-ru-full-wrap.jpg",
+   "preface": "samples/pod-parusom-ru/preface.html",
+   "excerpt": "samples/pod-parusom-ru/excerpt.html",
+   "previews": [
+    "pod-parusom-ru-p001.webp",
+    "pod-parusom-ru-p006.webp",
+    "pod-parusom-ru-p057.webp"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null,
+    "other": null
+   },
+   "isbn": {
+    "paperback": null,
+    "ebook": null
+   },
+   "price": null,
+   "availability": "coming soon (not on Amazon; Apple Books / other)"
+  },
+  {
+   "id": "wassersport-1885-no01-en",
+   "series": "wassersport-1885-issues",
+   "language": "en",
+   "title": "Wassersport 1885",
+   "issue": "No. 1 · January 1, 1885",
+   "contents": "Lolly and Nixe: Two Racing Yachts · The Pictet Racing Yacht · Naval Review · Skating",
+   "cover": "covers/wassersport-1885-no01-en.jpg",
+   "cover_web": "covers/wassersport-1885-no01-en-640.webp",
+   "formats": [
+    "ebook"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null
+   },
+   "price": null,
+   "status": "published (Apple Books)"
+  },
+  {
+   "id": "wassersport-1885-no02-en",
+   "series": "wassersport-1885-issues",
+   "language": "en",
+   "title": "Wassersport 1885",
+   "issue": "No. 2 · January 8, 1885",
+   "contents": null,
+   "cover": "covers/wassersport-1885-no02-en.jpg",
+   "cover_web": "covers/wassersport-1885-no02-en-640.webp",
+   "formats": [
+    "ebook"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null
+   },
+   "price": null,
+   "status": "published (Apple Books)"
+  },
+  {
+   "id": "wassersport-1885-no03-en",
+   "series": "wassersport-1885-issues",
+   "language": "en",
+   "title": "Wassersport 1885",
+   "issue": "No. 3 · 1885",
+   "contents": null,
+   "cover": "covers/wassersport-1885-no03-en.jpg",
+   "cover_web": "covers/wassersport-1885-no03-en-640.webp",
+   "formats": [
+    "ebook"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null
+   },
+   "price": null,
+   "status": "in preparation"
+  },
+  {
+   "id": "wassersport-1885-no04-en",
+   "series": "wassersport-1885-issues",
+   "language": "en",
+   "title": "Wassersport 1885",
+   "issue": "No. 4 · 1885",
+   "contents": null,
+   "cover": "covers/wassersport-1885-no04-en.jpg",
+   "cover_web": "covers/wassersport-1885-no04-en-640.webp",
+   "formats": [
+    "ebook"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null
+   },
+   "price": null,
+   "status": "in preparation"
+  },
+  {
+   "id": "wassersport-1885-january-en",
+   "series": "wassersport-1885-issues",
+   "language": "en",
+   "title": "Wassersport 1885",
+   "issue": "January 1885 · Nos. 1–5 · Complete month",
+   "contents": null,
+   "cover": "covers/wassersport-1885-january-en.jpg",
+   "cover_web": "covers/wassersport-1885-january-en-640.webp",
+   "formats": [
+    "ebook"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null
+   },
+   "price": null,
+   "status": "in preparation"
+  },
+  {
+   "id": "wassersport-1885-no01-de",
+   "series": "wassersport-1885-issues",
+   "language": "de",
+   "title": "Wassersport 1885",
+   "issue": "Nr. 1 · 1. Januar 1885",
+   "contents": null,
+   "cover": "covers/wassersport-1885-no01-de.jpg",
+   "cover_web": "covers/wassersport-1885-no01-de-640.webp",
+   "formats": [
+    "ebook"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null
+   },
+   "price": null,
+   "status": "in preparation"
+  }
+ ]
+}
