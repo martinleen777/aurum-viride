@@ -5,6 +5,7 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { GA_ID } from "./config.mjs";
 import { LANGS, DEFAULT_LANG, LANG_NAMES, SERIES, T, ABOUT, IMPRESSUM, PRIVACY } from "./i18n.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -162,7 +163,7 @@ function layout({ lang, rel, title, description, body, root, ogImage, ogType = "
   const img = ogImage || `${SITE_URL}/assets/img/icon-512.png`;
 
   return `<!doctype html>
-<html lang="${lang}">
+<html lang="${lang}"${GA_ID ? ` data-ga="${esc(GA_ID)}"` : ""}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -202,9 +203,10 @@ ${body}
 <div class="wrap footer-inner">
 <p class="footer-name">${NAME}</p>
 <p class="footer-motto">${esc(t.motto)}</p>
-<nav class="footer-links"><a href="${root}${lang}/books/">${t.nav_books}</a><a href="${root}${lang}/about/">${t.nav_about}</a><a href="${root}${lang}/impressum/">${t.impressum}</a><a href="${root}${lang}/privacy/">${t.privacy}</a></nav>
+<nav class="footer-links"><a href="${root}${lang}/books/">${t.nav_books}</a><a href="${root}${lang}/about/">${t.nav_about}</a><a href="${root}${lang}/impressum/">${t.impressum}</a><a href="${root}${lang}/privacy/">${t.privacy}</a>${GA_ID ? `<button type="button" class="consent-open">${t.consent_settings}</button>` : ""}</nav>
 </div>
 </footer>
+${GA_ID ? consentBanner(t, root, lang) : ""}
 </body>
 </html>
 `;
@@ -214,6 +216,19 @@ function hreflangLinks(alts) {
   const list = LANGS.filter((l) => alts[l] != null).map((l) => [l, `${SITE_URL}/${l}/${alts[l]}`]);
   if (list.length > 1) list.push(["x-default", `${SITE_URL}/${alts[DEFAULT_LANG] != null ? DEFAULT_LANG : list[0][0]}/${alts[DEFAULT_LANG] ?? alts[list[0][0]]}`]);
   return list.length > 1 ? list : [];
+}
+
+// Баннер согласия на аналитику: показывается скриптом site.js, пока посетитель не выбрал.
+// Кнопки «Принять» и «Отклонить» одинаково заметны — так требуют немецкие надзорные органы.
+function consentBanner(t, root, lang) {
+  return `<section class="consent" role="dialog" aria-modal="false" aria-labelledby="consent-title" hidden>
+<p class="consent-title" id="consent-title">${t.consent_title}</p>
+<p class="consent-text">${esc(t.consent_text)} <a href="${root}${lang}/privacy/">${t.consent_more}</a></p>
+<div class="consent-actions">
+<button type="button" class="btn consent-btn" data-consent="denied">${t.consent_decline}</button>
+<button type="button" class="btn consent-btn" data-consent="granted">${t.consent_accept}</button>
+</div>
+</section>`;
 }
 
 const rootFor = (lang, rel) => "../".repeat(1 + rel.split("/").filter(Boolean).length);

@@ -55,6 +55,9 @@ export const SERIES = [
 
 export const T = {
   en: {
+    consent_title: "Analytics cookies",
+    consent_text: "We would like to use Google Analytics to see how visitors use this site. It sets cookies and sends data to Google, including to the USA. Analytics only starts if you accept. You can change your choice at any time via “Cookie settings” at the bottom of the page.",
+    consent_accept: "Accept", consent_decline: "Decline", consent_more: "Privacy policy", consent_settings: "Cookie settings",
     hero_lead: "Rowing, sailing and boatbuilding from the Berlin weekly Wassersport, 1883–1895 — in English, German and Russian.",
     featured: "Featured", more_about_book: "Learn more",
     motto: "Forgotten pages from the golden age of rowing and sailing",
@@ -94,6 +97,9 @@ export const T = {
     back_home: "Back to the home page",
   },
   de: {
+    consent_title: "Analyse-Cookies",
+    consent_text: "Wir möchten Google Analytics nutzen, um zu sehen, wie Besucher diese Website verwenden. Dabei werden Cookies gesetzt und Daten an Google übermittelt, auch in die USA. Die Analyse startet nur, wenn Sie zustimmen. Ihre Wahl können Sie jederzeit über „Cookie-Einstellungen“ unten auf der Seite ändern.",
+    consent_accept: "Akzeptieren", consent_decline: "Ablehnen", consent_more: "Datenschutzerklärung", consent_settings: "Cookie-Einstellungen",
     hero_lead: "Rudern, Segeln und Bootsbau aus der Berliner Wochenschrift Wassersport, 1883–1895 — auf Deutsch, Englisch und Russisch.",
     featured: "Empfehlung", more_about_book: "Mehr erfahren",
     motto: "Vergessene Seiten aus dem goldenen Zeitalter des Ruderns und Segelns",
@@ -133,6 +139,9 @@ export const T = {
     back_home: "Zur Startseite",
   },
   ru: {
+    consent_title: "Cookies для аналитики",
+    consent_text: "Мы хотели бы использовать Google Analytics, чтобы видеть, как посетители пользуются сайтом. Для этого ставятся cookies, а данные передаются в Google, в том числе в США. Аналитика включится, только если вы согласитесь. Изменить выбор можно в любой момент по ссылке «Настройки cookies» внизу страницы.",
+    consent_accept: "Принять", consent_decline: "Отклонить", consent_more: "Политика конфиденциальности", consent_settings: "Настройки cookies",
     hero_lead: "Гребля, парусный спорт и постройка лодок по страницам берлинского еженедельника Wassersport, 1883–1895, — на русском, английском и немецком.",
     featured: "Рекомендуем", more_about_book: "Подробнее",
     motto: "Забытые страницы золотого века гребли и парусного спорта",
@@ -207,12 +216,17 @@ export const IMPRESSUM = {
 
 const GH_PRIVACY = "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement";
 
+const GOOGLE_PRIVACY = "https://policies.google.com/privacy";
+const GOOGLE_OPTOUT = "https://tools.google.com/dlpage/gaoptout";
+
 export const PRIVACY = {
   de: `<h1>Datenschutzerklärung</h1>
 <h2>Verantwortlicher</h2>
 <p>[NAME]<br>[ADDRESS]<br>E-Mail: [EMAIL]</p>
-<h2>Keine Cookies, kein Tracking</h2>
-<p>Diese Website setzt keine Cookies, verwendet keine Analyse- oder Tracking-Werkzeuge und bindet keine Inhalte Dritter ein. Die Schriften sind lokal auf dieser Website gespeichert und werden nicht von fremden Servern geladen.</p>
+<h2>Cookies und Einwilligung</h2>
+<p>Ohne Ihre Einwilligung setzt diese Website keine Cookies und verwendet keine Analyse- oder Tracking-Werkzeuge. Die Schriften sind lokal auf dieser Website gespeichert und werden nicht von fremden Servern geladen. Ihre Entscheidung im Einwilligungsbanner („Akzeptieren“ oder „Ablehnen“) wird im Speicher Ihres Browsers (localStorage) abgelegt, damit das Banner nicht bei jedem Seitenaufruf erneut erscheint; das ist technisch erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen: über den Link „Cookie-Einstellungen“ unten auf jeder Seite.</p>
+<h2>Google Analytics</h2>
+<p>Nur wenn Sie im Banner „Akzeptieren“ wählen, nutzen wir Google Analytics 4, einen Webanalysedienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland („Google“). Google Analytics setzt Cookies (<code>_ga</code>, <code>_ga_*</code>, Speicherdauer bis zu 2 Jahre) und erfasst Informationen über Ihre Nutzung der Website, z. B. aufgerufene Seiten, Verweildauer, ungefähren Standort, Geräte- und Browserdaten. IP-Adressen werden von Google Analytics 4 nicht gespeichert. Die Daten können an Server der Google LLC in den USA übermittelt werden; Google ist nach dem EU-US Data Privacy Framework zertifiziert. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO, § 25 Abs. 1 TDDDG). Die Analysedaten werden nach [ZEITRAUM, z. B. 14 Monaten] gelöscht. Wenn Sie die Einwilligung widerrufen, wird Google Analytics nicht mehr geladen und die Cookies werden gelöscht. Weitere Informationen: <a href="${GOOGLE_PRIVACY}" rel="noopener">Datenschutzerklärung von Google</a>; Browser-Add-on zur Deaktivierung: <a href="${GOOGLE_OPTOUT}" rel="noopener">tools.google.com/dlpage/gaoptout</a>.</p>
 <h2>Hosting</h2>
 <p>Die Website wird bei GitHub Pages gehostet, einem Dienst der GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. Beim Aufruf der Seiten verarbeitet GitHub die IP-Adresse der Besucher sowie technische Protokolldaten (z. B. Zeitpunkt des Abrufs, abgerufene Seite, Browsertyp), um die Website auszuliefern und ihre Sicherheit zu gewährleisten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO; unser berechtigtes Interesse liegt in der sicheren und zuverlässigen Bereitstellung der Website. Dabei können Daten in die USA übermittelt werden. Näheres im <a href="${GH_PRIVACY}" rel="noopener">GitHub Privacy Statement</a>.</p>
 <h2>Links zu Amazon und Apple Books</h2>
@@ -223,8 +237,10 @@ export const PRIVACY = {
 <p><i>Translation for convenience; the German version (Datenschutzerklärung) is authoritative.</i></p>
 <h2>Controller</h2>
 <p>[NAME]<br>[ADDRESS]<br>E-mail: [EMAIL]</p>
-<h2>No cookies, no tracking</h2>
-<p>This website sets no cookies, uses no analytics or tracking tools and embeds no third-party content. The fonts are stored on this website and are not loaded from other servers.</p>
+<h2>Cookies and consent</h2>
+<p>Without your consent this website sets no cookies and uses no analytics or tracking tools. The fonts are stored on this website and are not loaded from other servers. Your choice in the consent banner (“Accept” or “Decline”) is saved in your browser’s storage (localStorage) so that the banner does not reappear on every page; this is technically necessary (§ 25(2) no. 2 TDDDG). You can withdraw your consent at any time with effect for the future via the “Cookie settings” link at the bottom of every page.</p>
+<h2>Google Analytics</h2>
+<p>Only if you choose “Accept” in the banner do we use Google Analytics 4, a web analytics service of Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ireland (“Google”). Google Analytics sets cookies (<code>_ga</code>, <code>_ga_*</code>, stored for up to 2 years) and collects information about your use of the website, such as pages viewed, time spent, approximate location, device and browser data. Google Analytics 4 does not store IP addresses. Data may be transferred to servers of Google LLC in the USA; Google is certified under the EU-US Data Privacy Framework. The legal basis is your consent (Art. 6(1)(a) GDPR, § 25(1) TDDDG). Analytics data is deleted after [PERIOD, e.g. 14 months]. If you withdraw your consent, Google Analytics is no longer loaded and its cookies are deleted. More information: <a href="${GOOGLE_PRIVACY}" rel="noopener">Google Privacy Policy</a>; browser add-on to opt out: <a href="${GOOGLE_OPTOUT}" rel="noopener">tools.google.com/dlpage/gaoptout</a>.</p>
 <h2>Hosting</h2>
 <p>The website is hosted on GitHub Pages, a service of GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. When the pages are opened, GitHub processes visitors’ IP addresses and technical log data (for example the time of access, the page requested and the browser type) in order to deliver the website and keep it secure. The legal basis is Art. 6(1)(f) GDPR; our legitimate interest is the secure and reliable provision of the website. Data may be transferred to the USA. See the <a href="${GH_PRIVACY}" rel="noopener">GitHub Privacy Statement</a>.</p>
 <h2>Links to Amazon and Apple Books</h2>
@@ -235,8 +251,10 @@ export const PRIVACY = {
 <p><i>Перевод для удобства; юридически действует немецкая версия (Datenschutzerklärung).</i></p>
 <h2>Ответственное лицо</h2>
 <p>[NAME]<br>[ADDRESS]<br>E-mail: [EMAIL]</p>
-<h2>Без cookies и отслеживания</h2>
-<p>Сайт не использует cookies, инструменты аналитики и отслеживания и не встраивает содержимое третьих лиц. Шрифты хранятся на самом сайте и не загружаются с чужих серверов.</p>
+<h2>Cookies и согласие</h2>
+<p>Без вашего согласия сайт не устанавливает cookies и не использует инструменты аналитики и отслеживания. Шрифты хранятся на самом сайте и не загружаются с чужих серверов. Ваш выбор в баннере («Принять» или «Отклонить») сохраняется в памяти браузера (localStorage), чтобы баннер не появлялся на каждой странице; это технически необходимо (§ 25 абз. 2 п. 2 TDDDG). Вы можете в любой момент отозвать согласие на будущее — по ссылке «Настройки cookies» внизу каждой страницы.</p>
+<h2>Google Analytics</h2>
+<p>Только если вы нажали в баннере «Принять», мы используем Google Analytics 4 — сервис веб-аналитики компании Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Ирландия («Google»). Google Analytics устанавливает cookies (<code>_ga</code>, <code>_ga_*</code>, срок хранения — до 2 лет) и собирает сведения о том, как вы пользуетесь сайтом: просмотренные страницы, время на сайте, примерное местоположение, данные устройства и браузера. Google Analytics 4 не сохраняет IP-адреса. Данные могут передаваться на серверы Google LLC в США; Google сертифицирован по EU-US Data Privacy Framework. Правовое основание — ваше согласие (ст. 6 п. 1 лит. a GDPR, § 25 абз. 1 TDDDG). Данные аналитики удаляются через [СРОК, например 14 месяцев]. Если вы отзовёте согласие, Google Analytics больше не загружается, а его cookies удаляются. Подробнее: <a href="${GOOGLE_PRIVACY}" rel="noopener">политика конфиденциальности Google</a>; дополнение для браузера, отключающее аналитику: <a href="${GOOGLE_OPTOUT}" rel="noopener">tools.google.com/dlpage/gaoptout</a>.</p>
 <h2>Хостинг</h2>
 <p>Сайт размещён на GitHub Pages — сервисе компании GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. При открытии страниц GitHub обрабатывает IP-адреса посетителей и технические журналы (например, время обращения, запрошенную страницу, тип браузера), чтобы доставлять сайт и обеспечивать его безопасность. Правовое основание — ст. 6 п. 1 лит. f GDPR; наш законный интерес — безопасная и надёжная работа сайта. Данные могут передаваться в США. Подробнее — в <a href="${GH_PRIVACY}" rel="noopener">GitHub Privacy Statement</a>.</p>
 <h2>Ссылки на Amazon и Apple Books</h2>
