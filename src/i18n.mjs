@@ -193,25 +193,25 @@ export const ABOUT = {
 export const IMPRESSUM = {
   de: `<h1>Impressum</h1>
 <p>Angaben gemäß § 5 DDG</p>
-<p>Leonid Dudakov<br>Krohnskamp 13<br>22301 Hamburg<br>Deutschland</p>
+<p>Leonid Dudakov<br>c/o King Casino Entertainment GmbH<br>Krohnskamp 13<br>22301 Hamburg<br>Deutschland</p>
 <h2>Kontakt</h2>
 <p>Telefon: <a href="tel:+49402705434">+49 40 2705434</a><br>E-Mail: <a href="mailto:salegas@yahoo.com">salegas@yahoo.com</a></p>
 <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
-<p>Leonid Dudakov<br>Krohnskamp 13<br>22301 Hamburg<br>Deutschland</p>`,
+<p>Leonid Dudakov<br>c/o King Casino Entertainment GmbH<br>Krohnskamp 13<br>22301 Hamburg<br>Deutschland</p>`,
   en: `<h1>Impressum</h1>
 <p>Information pursuant to § 5 DDG (German Digital Services Act)</p>
-<p>Leonid Dudakov<br>Krohnskamp 13<br>22301 Hamburg<br>Germany</p>
+<p>Leonid Dudakov<br>c/o King Casino Entertainment GmbH<br>Krohnskamp 13<br>22301 Hamburg<br>Germany</p>
 <h2>Contact</h2>
 <p>Phone: <a href="tel:+49402705434">+49 40 2705434</a><br>E-mail: <a href="mailto:salegas@yahoo.com">salegas@yahoo.com</a></p>
 <h2>Responsible for content under § 18 (2) MStV</h2>
-<p>Leonid Dudakov<br>Krohnskamp 13<br>22301 Hamburg<br>Germany</p>`,
+<p>Leonid Dudakov<br>c/o King Casino Entertainment GmbH<br>Krohnskamp 13<br>22301 Hamburg<br>Germany</p>`,
   ru: `<h1>Impressum</h1>
 <p>Сведения согласно § 5 DDG (закон Германии о цифровых услугах)</p>
-<p>Leonid Dudakov<br>Krohnskamp 13<br>22301 Hamburg<br>Германия</p>
+<p>Leonid Dudakov<br>c/o King Casino Entertainment GmbH<br>Krohnskamp 13<br>22301 Hamburg<br>Германия</p>
 <h2>Контакт</h2>
 <p>Телефон: <a href="tel:+49402705434">+49 40 2705434</a><br>E-mail: <a href="mailto:salegas@yahoo.com">salegas@yahoo.com</a></p>
 <h2>Ответственный за содержание согласно § 18 абз. 2 MStV</h2>
-<p>Leonid Dudakov<br>Krohnskamp 13<br>22301 Hamburg<br>Германия</p>`,
+<p>Leonid Dudakov<br>c/o King Casino Entertainment GmbH<br>Krohnskamp 13<br>22301 Hamburg<br>Германия</p>`,
 };
 
 const GH_PRIVACY = "https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement";
@@ -222,7 +222,7 @@ const GOOGLE_OPTOUT = "https://tools.google.com/dlpage/gaoptout";
 export const PRIVACY = {
   de: `<h1>Datenschutzerklärung</h1>
 <h2>Verantwortlicher</h2>
-<p>Leonid Dudakov<br>Krohnskamp 13<br>22301 Hamburg<br>Deutschland<br>Telefon: <a href="tel:+49402705434">+49 40 2705434</a><br>E-Mail: <a href="mailto:salegas@yahoo.com">salegas@yahoo.com</a></p>
+<p>Leonid Dudakov<br>c/o King Casino Entertainment GmbH<br>Krohnskamp 13<br>22301 Hamburg<br>Deutschland<br>Telefon: <a href="tel:+49402705434">+49 40 2705434</a><br>E-Mail: <a href="mailto:salegas@yahoo.com">salegas@yahoo.com</a></p>
 <h2>Cookies und Einwilligung</h2>
 <p>Ohne Ihre Einwilligung setzt diese Website keine Cookies und verwendet keine Analyse- oder Tracking-Werkzeuge. Die Schriften sind lokal auf dieser Website gespeichert und werden nicht von fremden Servern geladen. Ihre Entscheidung im Einwilligungsbanner („Akzeptieren“ oder „Ablehnen“) wird im Speicher Ihres Browsers (localStorage) abgelegt, damit das Banner nicht bei jedem Seitenaufruf erneut erscheint; das ist technisch erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen: über den Link „Cookie-Einstellungen“ unten auf jeder Seite.</p>
 <h2>Google Analytics</h2>
@@ -236,7 +236,7 @@ export const PRIVACY = {
   en: `<h1>Privacy Policy</h1>
 <p><i>Translation for convenience; the German version (Datenschutzerklärung) is authoritative.</i></p>
 <h2>Controller</h2>
-<p>Leonid Dudakov<br>Krohnskamp 13<br>22301 Hamburg<br>Germany<br>Phone: <a href="tel:+49402705434">+49 40 2705434</a><br>E-mail: <a href="mailto:salegas@yahoo.com">salegas@yahoo.com</a></p>
+<p>Leonid Dudakov<br>c/o King Casino Entertainment GmbH<br>Krohnskamp 13<br>22301 Hamburg<br>Germany<br>Phone: <a href="tel:+49402705434">+49 40 2705434</a><br>E-mail: <a href="mailto:salegas@yahoo.com">salegas@yahoo.com</a></p>
 <h2>Cookies and consent</h2>
 <p>Without your consent this website sets no cookies and uses no analytics or tracking tools. The fonts are stored on this website and are not loaded from other servers. Your choice in the consent banner (“Accept” or “Decline”) is saved in your browser’s storage (localStorage) so that the banner does not reappear on every page; this is technically necessary (§ 25(2) no. 2 TDDDG). You can withdraw your consent at any time with effect for the future via the “Cookie settings” link at the bottom of every page.</p>
 <h2>Google Analytics</h2>
@@ -250,7 +250,7 @@ export const PRIVACY = {
   ru: `<h1>Политика конфиденциальности</h1>
 <p><i>Перевод для удобства; юридически действует немецкая версия (Datenschutzerklärung).</i></p>
 <h2>Ответственное лицо</h2>
-<p>Leonid Dudakov<br>Krohnskamp 13<br>22301 Hamburg<br>Германия<br>Телефон: <a href="tel:+49402705434">+49 40 2705434</a><br>E-mail: <a href="mailto:salegas@yahoo.com">salegas@yahoo.com</a></p>
+<p>Leonid Dudakov<br>c/o King Casino Entertainment GmbH<br>Krohnskamp 13<br>22301 Hamburg<br>Германия<br>Телефон: <a href="tel:+49402705434">+49 40 2705434</a><br>E-mail: <a href="mailto:salegas@yahoo.com">salegas@yahoo.com</a></p>
 <h2>Cookies и согласие</h2>
 <p>Без вашего согласия сайт не устанавливает cookies и не использует инструменты аналитики и отслеживания. Шрифты хранятся на самом сайте и не загружаются с чужих серверов. Ваш выбор в баннере («Принять» или «Отклонить») сохраняется в памяти браузера (localStorage), чтобы баннер не появлялся на каждой странице; это технически необходимо (§ 25 абз. 2 п. 2 TDDDG). Вы можете в любой момент отозвать согласие на будущее — по ссылке «Настройки cookies» внизу каждой страницы.</p>
 <h2>Google Analytics</h2>
