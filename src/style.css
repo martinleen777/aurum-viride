@@ -13,7 +13,13 @@
   --text: #1d1d1f;
   --muted: #6e6e73;
   --line: #d2d2d7;
-  --accent: #1f6f50;      /* цвет ссылок и надзаголовков */
+  --accent: #163d2e;      /* цвет ссылок и надзаголовков — зелёный обложек */
+  --green: #163d2e;       /* верхний блок главной, как фон обложек */
+  --green-deep: #0e3427;
+  --gold: #c9a24a;
+  --gold-gradient: linear-gradient(170deg, #fbefc0 0%, #e7c46c 28%, #b8892f 52%, #f0d385 74%, #c0923a 100%);
+  --on-green: #f2e2b6;
+  --on-green-soft: #cdbb8a;
   --paper: #fbf8f1;
   --ink: #1a1a1a;
   --rubric: #8a5a2b;
@@ -104,14 +110,29 @@ p { margin: 0 0 1em; }
 }
 
 /* ---------- Главная: заголовок и веер обложек ---------- */
-.hero { text-align: center; padding-top: clamp(3rem, 8vw, 5.5rem); overflow: hidden; }
-.hero-kicker { font: 600 1.15rem/1.2 var(--display); margin-bottom: .75rem; }
-.hero-title { font-size: clamp(2.5rem, 6.4vw, 4.6rem); max-width: 15ch; margin: 0 auto .35em; letter-spacing: -.03em; line-height: 1.04; }
-.hero-lead { font-size: clamp(1.1rem, 2vw, 1.35rem); line-height: 1.45; color: var(--muted); max-width: 38ch; margin: 0 auto 1.75rem; }
+/* Ровный зелёный, как на обложках, с мягким затемнением к краям; обложки «веера» наполовину выходят на белое. */
+.hero {
+  text-align: center; padding-top: clamp(3rem, 8vw, 5.5rem); overflow: hidden;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, .30) 100%), var(--green);
+  color: var(--on-green);
+}
+.hero-kicker { font: 600 .9rem/1.2 var(--display); letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+.hero-title {
+  font-size: clamp(2.5rem, 6.4vw, 4.6rem); max-width: 15ch; margin: 0 auto .35em; letter-spacing: -.03em; line-height: 1.04;
+  background: var(--gold-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+}
+.hero-lead { font-size: clamp(1.1rem, 2vw, 1.35rem); line-height: 1.45; color: var(--on-green-soft); max-width: 38ch; margin: 0 auto 1.75rem; }
+.hero .btn--primary { background: var(--gold); border-color: var(--gold); color: var(--green-deep); }
+.hero .btn--primary:hover { background: #e7c46c; border-color: #e7c46c; color: var(--green-deep); }
+.hero .btn--link { color: var(--on-green); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: .75rem 1rem; justify-content: center; align-items: center; margin: 0; }
-.hero-fan { display: flex; justify-content: center; align-items: flex-start; gap: clamp(.75rem, 2.5vw, 2rem); margin-top: clamp(2.5rem, 6vw, 4rem); padding: 0 var(--gutter) clamp(2.5rem, 6vw, 4.5rem); }
+.hero-fan {
+  display: flex; justify-content: center; align-items: flex-start; gap: clamp(.75rem, 2.5vw, 2rem);
+  margin-top: clamp(2.5rem, 6vw, 4rem); padding: 0 var(--gutter) clamp(2.5rem, 6vw, 4.5rem);
+  background: linear-gradient(transparent 58%, var(--bg) 58%);
+}
 .fan-item { flex: none; width: clamp(150px, 19vw, 250px); transition: transform .35s ease; }
-.fan-item img { display: block; width: 100%; aspect-ratio: 5 / 8; object-fit: cover; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, .08), 0 30px 50px -22px rgba(0, 0, 0, .45); }
+.fan-item img { display: block; width: 100%; aspect-ratio: 5 / 8; object-fit: cover; border-radius: 6px; box-shadow: 0 2px 6px rgba(0, 0, 0, .25), 0 30px 50px -20px rgba(0, 0, 0, .6); }
 .fan-d2 { margin-top: 4.5rem; }
 .fan-d1 { margin-top: 2rem; }
 .fan-item:hover { transform: translateY(-8px); }
