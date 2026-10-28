@@ -88,7 +88,7 @@ npm run serve
 - Google Analytics загружается **только после «Принять»**; до этого сайт не обращается к Google и не ставит cookies;
 - выбор запоминается в браузере, а ссылка «Настройки cookies» внизу каждой страницы снова открывает баннер; при отзыве согласия cookies Google Analytics удаляются.
 
-В настройках Google Analytics (Admin → Data collection and modification → **Data retention**) выберите срок хранения данных, например 14 месяцев, и впишите его вместо `[ZEITRAUM]`, `[PERIOD]`, `[СРОК]` в разделе про Google Analytics в `src/i18n.mjs` (`PRIVACY`).
+Сроки хранения данных в Datenschutz (`src/i18n.mjs`, `PRIVACY`) совпадают с настройками Google Analytics (Admin → Data collection and modification → **Data retention**): данные о событиях — 2 месяца, данные о пользователях — 14 месяцев, «Сбросить при новом действии пользователя» включено. Если поменяете настройки в Google Analytics, поменяйте и текст.
 
 ## Юридические страницы
 
