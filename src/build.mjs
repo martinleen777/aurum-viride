@@ -227,6 +227,7 @@ function homePage(lang) {
   // Веер обложек под заголовком: по книге из каждой серии, на языке версии — в центре.
   const bb = inSeries("building-boats"), oar = inSeries("under-oar-and-sail"), ws = inSeries("wassersport-1885-issues");
   const fan = [ws[0], oar.find((b) => b.volume === 1), bb[0], oar.find((b) => b.volume === 2), ws[1]].filter(Boolean);
+  if (fan.length % 2 === 0) fan.shift(); // нечётное число обложек — веер симметричен
   const hero = `<section class="hero">
 <div class="wrap">
 <p class="hero-kicker">${NAME}</p>
