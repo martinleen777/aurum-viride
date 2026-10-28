@@ -92,4 +92,4 @@ npm run serve
 
 ## Юридические страницы
 
-Impressum и Datenschutzerklärung лежат в `src/i18n.mjs` (`IMPRESSUM`, `PRIVACY`). Замените заглушки `[NAME]`, `[ADDRESS]`, `[EMAIL]` на свои данные на всех трёх языках.
+Impressum и Datenschutzerklärung лежат в `src/i18n.mjs` (`IMPRESSUM`, `PRIVACY`). Если сменятся адрес или e-mail либо появится телефон, поправьте их там на всех трёх языках.
