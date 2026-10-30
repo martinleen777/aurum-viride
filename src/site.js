@@ -75,6 +75,13 @@
     });
   }
 
+  // ---------- Лента обложек на телефоне: при открытии — по центру ----------
+  var fan = document.querySelector(".hero-fan");
+  if (fan && fan.scrollWidth > fan.clientWidth) {
+    var mid = fan.children[Math.floor(fan.children.length / 2)];
+    if (mid) fan.scrollLeft += mid.getBoundingClientRect().left - fan.getBoundingClientRect().left - (fan.clientWidth - mid.offsetWidth) / 2;
+  }
+
   // ---------- Фильтры каталога ----------
   var filters = document.querySelector(".filters");
   if (filters) {
