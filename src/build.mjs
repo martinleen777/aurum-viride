@@ -242,7 +242,10 @@ function homePage(lang) {
   // Веер обложек под заголовком: по книге из каждой серии, на языке версии — в центре.
   const bb = inSeries("building-boats"), oar = inSeries("under-oar-and-sail"), ws = inSeries("wassersport-1885-issues");
   const fan = [ws[0], oar.find((b) => b.volume === 1), bb[0], oar.find((b) => b.volume === 2), ws[1]].filter(Boolean);
-  if (fan.length % 2 === 0) fan.shift(); // нечётное число обложек — веер симметричен
+  // На компьютере в веере нечётное число обложек (симметрично); лишняя показывается только в ленте на телефоне.
+  const extra = fan.length % 2 === 0 ? fan[0] : null;
+  const desk = extra ? fan.slice(1) : fan;
+  const fanClass = (b) => (b === extra ? "fan-extra" : `fan-item fan-d${Math.abs(desk.indexOf(b) - Math.floor(desk.length / 2))}`);
   const hero = `<section class="hero">
 <div class="wrap">
 <p class="hero-kicker">${NAME}</p>
@@ -250,7 +253,7 @@ function homePage(lang) {
 <p class="hero-lead">${esc(t.hero_lead)}</p>
 <p class="hero-actions"><a class="btn btn--primary" href="${root}${lang}/books/">${t.to_catalog}</a><a class="btn btn--link" href="${root}${lang}/about/">${t.about_project} ›</a></p>
 </div>
-<div class="hero-fan">${fan.map((b, i) => `<a class="fan-item fan-d${Math.abs(i - Math.floor(fan.length / 2))}" href="${root}${lang}/books/${b.id}/" tabindex="-1">${picture(b, root, { sizes: "(max-width: 600px) 40vw, 260px", eager: true })}</a>`).join("")}</div>
+<div class="hero-fan">${fan.map((b) => `<a class="${fanClass(b)}" href="${root}${lang}/books/${b.id}/" tabindex="-1">${picture(b, root, { sizes: "(max-width: 600px) 40vw, 260px", eager: true })}</a>`).join("")}</div>
 </section>`;
 
   // Серия из одной книги показывается крупным блоком «Рекомендуем», остальные — полкой обложек.
