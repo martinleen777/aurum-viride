@@ -80,6 +80,24 @@
   if (fan && fan.scrollWidth > fan.clientWidth) {
     var mid = fan.children[Math.floor(fan.children.length / 2)];
     if (mid) fan.scrollLeft += mid.getBoundingClientRect().left - fan.getBoundingClientRect().left - (fan.clientWidth - mid.offsetWidth) / 2;
+
+    // Полукруг: чем дальше обложка от центра экрана, тем ниже она опущена.
+    var arcQueued = false;
+    var arc = function () {
+      arcQueued = false;
+      var box = fan.getBoundingClientRect();
+      var center = box.left + box.width / 2;
+      Array.prototype.forEach.call(fan.children, function (item) {
+        var r = item.getBoundingClientRect();
+        var d = Math.min(Math.abs(r.left + r.width / 2 - center) / (r.width + 14), 2); // 0 — в центре, 1 — соседняя, 2 — крайняя
+        item.style.setProperty("--arc", Math.round(d * d * 9 + d * 7) + "px");
+      });
+    };
+    arc();
+    fan.addEventListener("scroll", function () {
+      if (!arcQueued) { arcQueued = true; requestAnimationFrame(arc); }
+    }, { passive: true });
+    window.addEventListener("resize", arc);
   }
 
   // ---------- Фильтры каталога ----------

@@ -140,14 +140,15 @@ p { margin: 0 0 1em; }
 /* На телефоне — лента обложек, листается пальцем влево-вправо */
 @media (max-width: 760px) {
   .hero-fan {
-    justify-content: flex-start; align-items: center; gap: .85rem;
+    justify-content: flex-start; align-items: flex-start; gap: .85rem;
     overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch;
-    padding: .25rem 29vw 1.5rem;
+    padding: .25rem 29vw 3.5rem;
     background: linear-gradient(transparent 50%, var(--bg) 50%);
   }
   .hero-fan::-webkit-scrollbar { display: none; }
-  .fan-item, .fan-extra { display: block; width: 42vw; margin-top: 0; scroll-snap-align: center; }
-  .fan-item:hover { transform: none; }
+  /* полукруг: книга в центре экрана выше всех, соседние ниже — сдвиг задаёт site.js при прокрутке */
+  .fan-item, .fan-extra { display: block; width: 42vw; margin-top: 0; scroll-snap-align: center; transform: translateY(var(--arc, 0px)); transition: transform .12s linear; will-change: transform; }
+  .fan-item:hover { transform: translateY(var(--arc, 0px)); }
 }
 }
 
