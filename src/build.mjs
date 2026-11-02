@@ -129,7 +129,7 @@ function card(b, lang, root, showSeries) {
   // Маленькие ссылки на магазины под карточкой — только если ссылки уже есть («Coming soon» здесь не показываем).
   const stores = storeLinks(b);
   const quick = stores.length
-    ? `<span class="card-stores">${stores.map((l) => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label || T[lang].other_link)}</a>`).join('<span aria-hidden="true"> · </span>')}</span>`
+    ? `<span class="card-stores">${stores.map((l) => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label || T[lang].other_link)}</a>`).join("")}</span>`
     : "";
   return `<li class="card" data-series="${b.series}" data-lang="${b.language}" data-format="${fmt}">
 <a class="card-main" href="${root}${lang}/books/${b.id}/">
