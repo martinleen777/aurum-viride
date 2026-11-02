@@ -126,12 +126,17 @@ function card(b, lang, root, showSeries) {
   const s = b._series;
   const meta = isJournal(b) ? (b.issue || "") : [showSeries && s.name[lang] !== b.title ? s.name[lang] : "", b.volume ? `${T[lang].volume} ${roman(b.volume)}` : ""].filter(Boolean).join(" · ");
   const fmt = [hasPrint(b) ? "print" : "", hasEbook(b) ? "ebook" : ""].filter(Boolean).join(" ");
+  // Маленькие ссылки на магазины под карточкой — только если ссылки уже есть («Coming soon» здесь не показываем).
+  const stores = storeLinks(b);
+  const quick = stores.length
+    ? `<span class="card-stores">${stores.map((l) => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label || T[lang].other_link)}</a>`).join('<span aria-hidden="true"> · </span>')}</span>`
+    : "";
   return `<li class="card" data-series="${b.series}" data-lang="${b.language}" data-format="${fmt}">
-<a href="${root}${lang}/books/${b.id}/">
+<a class="card-main" href="${root}${lang}/books/${b.id}/">
 <span class="card-cover">${picture(b, root)}</span>
 <span class="card-title" lang="${b.language}">${esc(b.title)}</span>
 ${meta ? `<span class="card-meta">${esc(meta)}</span>` : ""}
-</a></li>`;
+</a>${quick}</li>`;
 }
 
 const roman = (n) => ["", "I", "II", "III", "IV", "V", "VI"][n] || String(n);
