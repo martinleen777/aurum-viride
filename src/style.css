@@ -82,6 +82,9 @@ p { margin: 0 0 1em; }
 .store--primary { border-color: var(--text); }
 .btn--link { padding-left: .5rem; padding-right: .5rem; color: var(--accent); }
 .btn--link:hover { text-decoration: underline; }
+/* Кнопки магазинов — зелёные, как верх и подвал; при наведении темнее и чуть приподнимаются */
+.store, .store--primary { background: var(--green); border-color: var(--green); color: #fff; transition: background .2s, border-color .2s, transform .2s, box-shadow .2s; }
+.store:hover, .store--primary:hover { background: var(--green-deep); border-color: var(--green-deep); color: #fff; transform: translateY(-1px); box-shadow: 0 6px 14px -6px rgba(14, 52, 39, .6); }
 .store--soon, .store--soon:hover { background: var(--bg-alt); border-color: var(--bg-alt); color: var(--muted); cursor: default; }
 .stores { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.75rem; }
 
@@ -183,9 +186,9 @@ p { margin: 0 0 1em; }
 .card-main:hover .card-title { color: var(--accent); }
 .card-meta { display: block; margin-top: .3rem; font-size: .85rem; color: var(--muted); line-height: 1.4; }
 /* быстрые ссылки на магазины под карточкой */
-.card-stores { display: block; margin-top: .45rem; font-size: .8rem; font-weight: 600; line-height: 1.6; color: var(--muted); }
-.card-stores a { color: var(--accent); white-space: nowrap; padding: .2rem 0; }
-.card-stores a:hover { text-decoration: underline; }
+.card-stores { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .55rem; }
+.card-stores a { display: inline-block; padding: .3rem .65rem; border-radius: 980px; background: var(--green); color: #fff; font-size: .75rem; font-weight: 600; line-height: 1.2; white-space: nowrap; text-decoration: none; transition: background .2s, transform .2s, box-shadow .2s; }
+.card-stores a:hover { background: var(--green-deep); color: #fff; text-decoration: none; transform: translateY(-1px); box-shadow: 0 4px 10px -4px rgba(14, 52, 39, .6); }
 .lang-badge {
   display: inline-block; font-size: .68rem; font-weight: 600; letter-spacing: .05em; line-height: 1;
   padding: .3em .45em; border-radius: 4px; background: var(--bg-alt); color: var(--text); margin-right: .3rem; vertical-align: .1em;
