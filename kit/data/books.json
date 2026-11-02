@@ -456,11 +456,11 @@
     "ebook"
    ],
    "links": {
-    "amazon": null,
+    "amazon": "https://www.amazon.com/dp/B0HMPJ1B1V",
     "apple_books": "https://books.apple.com/book/id6820979918"
    },
    "price": null,
-   "status": "published (Apple Books)"
+   "status": "published (Amazon, Apple Books)"
   },
   {
    "id": "wassersport-1885-no02-en",
@@ -475,11 +475,11 @@
     "ebook"
    ],
    "links": {
-    "amazon": null,
+    "amazon": "https://www.amazon.com/dp/B0HGZX6SY7",
     "apple_books": "https://books.apple.com/book/id6820992593"
    },
    "price": null,
-   "status": "published (Apple Books)"
+   "status": "published (Amazon, Apple Books)"
   },
   {
    "id": "wassersport-1885-no03-en",
@@ -494,11 +494,11 @@
     "ebook"
    ],
    "links": {
-    "amazon": null,
+    "amazon": "https://www.amazon.com/dp/B0HMW5583G",
     "apple_books": "https://books.apple.com/book/id6822161994"
    },
    "price": null,
-   "status": "published (Apple Books)"
+   "status": "published (Amazon, Apple Books)"
   },
   {
    "id": "wassersport-1885-no04-en",
