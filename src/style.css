@@ -174,14 +174,18 @@ p { margin: 0 0 1em; }
 /* ---------- Сетка и карточки ---------- */
 .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 2.25rem clamp(1rem, 3vw, 2rem); }
 @media (max-width: 600px) { .grid:not(.row) { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.75rem 1rem; } }
-.card a { display: block; color: inherit; }
-.card a:hover { text-decoration: none; }
+.card-main { display: block; color: inherit; }
+.card-main:hover { text-decoration: none; }
 .card-cover { display: block; transition: transform .3s ease; }
 .card-cover img { display: block; width: 100%; aspect-ratio: 5 / 8; object-fit: cover; border-radius: 4px; box-shadow: var(--cover-shadow); }
-.card a:hover .card-cover { transform: translateY(-5px); }
+.card-main:hover .card-cover { transform: translateY(-5px); }
 .card-title { display: block; margin-top: .9rem; font-size: 1rem; font-weight: 600; line-height: 1.3; letter-spacing: -.01em; }
-.card a:hover .card-title { color: var(--accent); }
+.card-main:hover .card-title { color: var(--accent); }
 .card-meta { display: block; margin-top: .3rem; font-size: .85rem; color: var(--muted); line-height: 1.4; }
+/* быстрые ссылки на магазины под карточкой */
+.card-stores { display: block; margin-top: .45rem; font-size: .8rem; font-weight: 600; line-height: 1.6; color: var(--muted); }
+.card-stores a { color: var(--accent); white-space: nowrap; padding: .2rem 0; }
+.card-stores a:hover { text-decoration: underline; }
 .lang-badge {
   display: inline-block; font-size: .68rem; font-weight: 600; letter-spacing: .05em; line-height: 1;
   padding: .3em .45em; border-radius: 4px; background: var(--bg-alt); color: var(--text); margin-right: .3rem; vertical-align: .1em;
