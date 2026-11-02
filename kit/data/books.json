@@ -457,7 +457,7 @@
    ],
    "links": {
     "amazon": null,
-    "apple_books": null
+    "apple_books": "https://books.apple.com/book/id6820979918"
    },
    "price": null,
    "status": "published (Apple Books)"
@@ -476,7 +476,7 @@
    ],
    "links": {
     "amazon": null,
-    "apple_books": null
+    "apple_books": "https://books.apple.com/book/id6820992593"
    },
    "price": null,
    "status": "published (Apple Books)"
@@ -486,7 +486,7 @@
    "series": "wassersport-1885-issues",
    "language": "en",
    "title": "Wassersport 1885",
-   "issue": "No. 3 · 1885",
+   "issue": "No. 3 · January 15, 1885",
    "contents": null,
    "cover": "covers/wassersport-1885-no03-en.jpg",
    "cover_web": "covers/wassersport-1885-no03-en-640.webp",
@@ -495,17 +495,17 @@
    ],
    "links": {
     "amazon": null,
-    "apple_books": null
+    "apple_books": "https://books.apple.com/book/id6822161994"
    },
    "price": null,
-   "status": "in preparation"
+   "status": "published (Apple Books)"
   },
   {
    "id": "wassersport-1885-no04-en",
    "series": "wassersport-1885-issues",
    "language": "en",
    "title": "Wassersport 1885",
-   "issue": "No. 4 · 1885",
+   "issue": "No. 4 · January 22, 1885",
    "contents": null,
    "cover": "covers/wassersport-1885-no04-en.jpg",
    "cover_web": "covers/wassersport-1885-no04-en-640.webp",
@@ -514,10 +514,10 @@
    ],
    "links": {
     "amazon": null,
-    "apple_books": null
+    "apple_books": "https://books.apple.com/book/id6822163647"
    },
    "price": null,
-   "status": "in preparation"
+   "status": "published (Apple Books)"
   },
   {
    "id": "wassersport-1885-january-en",
