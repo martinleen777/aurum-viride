@@ -258,7 +258,6 @@ function homePage(lang) {
   const fanClass = (b) => (b === extra ? "fan-extra" : `fan-item fan-d${Math.abs(desk.indexOf(b) - Math.floor(desk.length / 2))}`);
   const hero = `<section class="hero">
 <div class="wrap">
-<p class="hero-kicker">${NAME}</p>
 <h1 class="hero-title">${esc(t.motto)}</h1>
 <p class="hero-lead">${esc(t.hero_lead)}</p>
 <p class="hero-actions"><a class="btn btn--primary" href="${root}${lang}/books/">${t.to_catalog}</a><a class="btn btn--link" href="${root}${lang}/about/">${t.about_project} ›</a></p>
@@ -325,6 +324,23 @@ function photoTag(name, root) {
   return `<picture><source type="image/webp" srcset="${root}assets/img/${name}.webp"><img src="${root}assets/img/${name}.jpg" alt="" loading="lazy"></picture>`;
 }
 
+// Зелёная полоса вверху страницы (как верх главной): надзаголовок, заголовок, подзаголовок, текст, фото.
+// thin — узкая полоса только с надзаголовком (страница книги).
+function band({ eyebrow = "", title = "", sub = "", lead = "", photo = "", thin = false }) {
+  if (thin) return `<section class="band band--thin"><div class="wrap">${eyebrow ? `<p class="eyebrow">${eyebrow}</p>` : ""}</div></section>`;
+  return `<section class="band${photo ? " band--photo" : ""}">
+<div class="wrap band-inner">
+<div>
+${eyebrow ? `<p class="eyebrow">${eyebrow}</p>` : ""}
+<h1>${title}</h1>
+${sub ? `<p class="band-sub">${sub}</p>` : ""}
+${lead ? `<p class="band-lead">${lead}</p>` : ""}
+</div>
+${photo}
+</div>
+</section>`;
+}
+
 // Карточка проекта: фото, название, годы, коротко о сути и сколько серий и изданий из него сделано.
 function projectCard(p, lang, root) {
   const t = T[lang];
@@ -347,11 +363,8 @@ function projectCard(p, lang, root) {
 function projectsPage(lang) {
   const t = T[lang], rel = "projects/", root = rootFor(lang, rel);
   const projects = PROJECTS.filter((p) => booksOfProject(lang, p.id).length);
-  const body = `<div class="wrap page">
-<header class="page-head">
-<h1>${t.projects}</h1>
-<p class="lead">${esc(t.projects_intro)}</p>
-</header>
+  const body = `${band({ title: t.projects, lead: esc(t.projects_intro) })}
+<div class="wrap page">
 ${projects.map((p) => projectCard(p, lang, root)).join("\n")}
 </div>`;
   write(`${lang}/${rel}index.html`, layout({ lang, rel, root, title: t.projects, description: t.projects_intro, body }));
@@ -370,17 +383,8 @@ function projectPage(lang, p) {
 ${grid(books, lang, root, s.journal ? "grid--journal" : "")}
 </section>`;
   }).join("\n");
-  const body = `<section class="project-hero">
-<div class="wrap project-hero-inner">
-<div>
-<p class="eyebrow"><a href="${root}${lang}/projects/">${t.project}</a></p>
-<h1>${esc(p.name[lang])}</h1>
-<p class="project-period">${esc(p.period[lang])}</p>
-<p class="project-lead">${p.text[lang]}</p>
-</div>
-${p.photo ? `<figure class="photo">${photoTag(p.photo, root)}</figure>` : ""}
-</div>
-</section>
+  const body = `${band({ eyebrow: `<a href="${root}${lang}/projects/">${t.project}</a>`, title: esc(p.name[lang]), sub: esc(p.period[lang]), lead: p.text[lang],
+    photo: p.photo ? `<figure class="photo">${photoTag(p.photo, root)}</figure>` : "" })}
 <div class="wrap page project-page">
 <h2 class="section-title">${t.project_series}</h2>
 ${blocks}
@@ -404,11 +408,8 @@ function catalogPage(lang) {
     series.length > 1 ? group("series", t.series, series.map((s) => [s.id, s.name[lang]])) : "",
     bothFormats ? group("format", t.format_filter, [["print", t.print], ["ebook", t.ebook]]) : "",
   ].filter(Boolean).join("\n");
-  const body = `<div class="wrap page">
-<header class="page-head">
-<h1>${t.catalog}</h1>
-<p class="lead">${t.catalog_intro}</p>
-</header>
+  const body = `${band({ title: t.catalog, lead: esc(t.catalog_intro) })}
+<div class="wrap page">
 ${filters ? `<div class="filters" hidden>\n${filters}\n</div>` : ""}
 ${grid(books, lang, root, "catalog", true)}
 <p class="empty" hidden>${t.nothing_found}</p>
@@ -423,19 +424,11 @@ function sortLangs(lang, list) {
 function seriesPage(lang, s) {
   const t = T[lang], rel = `series/${s.id}/`, root = rootFor(lang, rel);
   const books = sortFor(lang, booksIn(lang).filter((b) => b.series === s.id));
-  const photo = s.photo
-    ? `<figure class="photo"><picture><source type="image/webp" srcset="${root}assets/img/${s.photo}.webp"><img src="${root}assets/img/${s.photo}.jpg" alt="" loading="lazy"></picture></figure>`
-    : "";
-  const body = `<div class="${s.journal ? "journal " : ""}series-page">
+  const photo = s.photo ? `<figure class="photo">${photoTag(s.photo, root)}</figure>` : "";
+  const body = `${band({ eyebrow: `<a href="${root}${lang}/projects/${s.project}/">${esc(projectById[s.project].name[lang])}</a> · ${t.series}`,
+    title: esc(s.name[lang]), lead: esc(s.text[lang]), photo })}
+<div class="${s.journal ? "journal " : ""}series-page">
 <div class="wrap page">
-<header class="page-head series-intro">
-<div>
-<p class="eyebrow"><a href="${root}${lang}/projects/${s.project}/">${esc(projectById[s.project].name[lang])}</a> · ${t.series}</p>
-<h1>${esc(s.name[lang])}</h1>
-<p class="lead">${esc(s.text[lang])}</p>
-</div>
-${photo}
-</header>
 <h2 class="section-title">${t.series_books}</h2>
 ${grid(books, lang, root, s.journal ? "grid--journal" : "")}
 </div>
@@ -546,11 +539,12 @@ function bookPage(lang, b) {
     moreIssues.length ? `<h2 class="section-title">${t.more_issues}</h2>${grid(moreIssues, lang, root, "grid--journal")}` : "",
   ].filter(Boolean).join("");
 
-  const body = `<div class="${isJournal(b) ? "journal " : ""}book-page">
+  const crumbs = `<a href="${root}${lang}/projects/${s.project}/">${esc(projectById[s.project].name[lang])}</a> · <a href="${root}${lang}/series/${s.id}/">${esc(s.name[lang])}</a>`;
+  const body = `${band({ eyebrow: crumbs, thin: true })}
+<div class="${isJournal(b) ? "journal " : ""}book-page">
 <div class="wrap book">
 <div class="book-cover">${cover}</div>
 <div class="book-info">
-<p class="eyebrow"><a href="${root}${lang}/projects/${s.project}/">${esc(projectById[s.project].name[lang])}</a> · <a href="${root}${lang}/series/${s.id}/">${esc(s.name[lang])}</a></p>
 <h1 class="book-title" lang="${bl}">${esc(b.title)}</h1>
 ${subline(b) ? `<p class="book-volume" lang="${bl}">${esc(subline(b))}</p>` : ""}
 ${b.subtitle ? `<p class="book-subtitle" lang="${bl}">${esc(b.subtitle)}</p>` : ""}
@@ -582,8 +576,8 @@ function bigCover(b, root) {
 
 function aboutPage(lang) {
   const t = T[lang], rel = "about/", root = rootFor(lang, rel);
-  const body = `<div class="wrap page about">
-<header class="page-head"><h1>${t.about_project}</h1></header>
+  const body = `${band({ title: t.about_project })}
+<div class="wrap page about">
 <div class="about-grid">
 <div class="about-text">${ABOUT[lang].map((p) => `<p>${p}</p>`).join("")}
 <p><a class="btn btn--outline" href="${root}${lang}/projects/">${t.our_projects} ›</a></p></div>
@@ -600,7 +594,9 @@ function aboutPage(lang) {
 
 function legalPage(lang, slug, html, title) {
   const rel = `${slug}/`, root = rootFor(lang, rel);
-  const body = `<div class="wrap page"><article class="legal">${html}</article></div>`;
+  const h1 = (html.match(/<h1>([\s\S]*?)<\/h1>/) || [])[1] || title;
+  const body = `${band({ title: h1 })}
+<div class="wrap page"><article class="legal">${html.replace(/<h1>[\s\S]*?<\/h1>\s*/, "")}</article></div>`;
   write(`${lang}/${rel}index.html`, layout({ lang, rel, root, title, description: title, body }));
 }
 
@@ -644,8 +640,8 @@ ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${SITE_URL}/${l}
 
 // 404: GitHub Pages показывает её по любому адресу, поэтому пути — от корня сайта.
 write("404.html", layout({ lang: "en", rel: "404/", root: BASE_PATH, title: T.en.not_found, description: T.en.not_found_text, noindex: true,
-  body: `<div class="wrap page notfound">
-<h1>404</h1>
+  body: `${band({ title: "404" })}
+<div class="wrap page notfound">
 ${LANGS.map((l) => `<p lang="${l}">${T[l].not_found}. <a href="${BASE_PATH}${l}/">${T[l].back_home}</a></p>`).join("\n")}
 </div>` }).replace(/<nav class="langs"[\s\S]*?<\/nav>/, ""));
 
