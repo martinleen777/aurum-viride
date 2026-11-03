@@ -6,7 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { GA_ID } from "./config.mjs";
-import { LANGS, DEFAULT_LANG, LANG_NAMES, SERIES, T, ABOUT, IMPRESSUM, PRIVACY } from "./i18n.mjs";
+import { LANGS, DEFAULT_LANG, LANG_NAMES, PROJECTS, SERIES, T, ABOUT, IMPRESSUM, PRIVACY } from "./i18n.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const KIT = path.join(ROOT, "kit");
@@ -42,7 +42,11 @@ function fail(msg) {
 }
 
 // ---------- данные ----------
+const projectById = Object.fromEntries(PROJECTS.map((p, i) => [p.id, { ...p, order: i }]));
+for (const s of SERIES) if (!projectById[s.project]) fail(`у серии «${s.id}» в src/i18n.mjs неизвестный проект «${s.project}»`);
 const seriesById = Object.fromEntries(SERIES.map((s, i) => [s.id, { ...s, order: i }]));
+const seriesOf = (projectId) => SERIES.filter((s) => s.project === projectId);
+const booksOfProject = (lang, projectId) => booksIn(lang).filter((b) => b._series.project === projectId);
 const BOOKS = data.books.map((b, i) => {
   if (!b.id || !/^[a-z0-9-]+$/.test(b.id)) fail(`у книги №${i + 1} неверный id «${b.id}» (только латиница, цифры и дефис)`);
   if (!seriesById[b.series]) fail(`у книги «${b.id}» неизвестная серия «${b.series}»`);
@@ -156,10 +160,11 @@ function layout({ lang, rel, title, description, body, root, ogImage, ogType = "
   const alt = noindex ? "" : hreflangLinks(alts).map(([l, href]) => `<link rel="alternate" hreflang="${l}" href="${href}">`).join("\n");
   const nav = [
     ["", t.nav_home],
+    ["projects/", t.nav_projects],
     ["books/", t.nav_books],
     ["about/", t.nav_about],
   ].map(([href, label]) => {
-    const current = rel === href || (href && rel.startsWith(href) && href !== "about/");
+    const current = rel === href || (href && rel.startsWith(href) && href !== "about/") || (href === "projects/" && rel.startsWith("series/"));
     return `<a href="${root}${lang}/${href}"${current ? ' aria-current="page"' : ""}>${label}</a>`;
   }).join("");
   const switcher = LANGS.map((l) =>
@@ -208,7 +213,7 @@ ${body}
 <div class="wrap footer-inner">
 <p class="footer-name">${NAME}</p>
 <p class="footer-motto">${esc(t.motto)}</p>
-<nav class="footer-links"><a href="${root}${lang}/books/">${t.nav_books}</a><a href="${root}${lang}/about/">${t.nav_about}</a><a href="${root}${lang}/impressum/">${t.impressum}</a><a href="${root}${lang}/privacy/">${t.privacy}</a>${GA_ID ? `<button type="button" class="consent-open">${t.consent_settings}</button>` : ""}</nav>
+<nav class="footer-links"><a href="${root}${lang}/projects/">${t.nav_projects}</a><a href="${root}${lang}/books/">${t.nav_books}</a><a href="${root}${lang}/about/">${t.nav_about}</a><a href="${root}${lang}/impressum/">${t.impressum}</a><a href="${root}${lang}/privacy/">${t.privacy}</a>${GA_ID ? `<button type="button" class="consent-open">${t.consent_settings}</button>` : ""}</nav>
 </div>
 </footer>
 ${GA_ID ? consentBanner(t, root, lang) : ""}
@@ -253,7 +258,6 @@ function homePage(lang) {
   const fanClass = (b) => (b === extra ? "fan-extra" : `fan-item fan-d${Math.abs(desk.indexOf(b) - Math.floor(desk.length / 2))}`);
   const hero = `<section class="hero">
 <div class="wrap">
-<p class="hero-kicker">${NAME}</p>
 <h1 class="hero-title">${esc(t.motto)}</h1>
 <p class="hero-lead">${esc(t.hero_lead)}</p>
 <p class="hero-actions"><a class="btn btn--primary" href="${root}${lang}/books/">${t.to_catalog}</a><a class="btn btn--link" href="${root}${lang}/about/">${t.about_project} ›</a></p>
@@ -291,17 +295,104 @@ ${(f.blurb || [])[0] ? `<p class="featured-blurb" lang="${f.language}">${esc(f.b
 </section>`;
   });
 
+  const projects = PROJECTS.filter((p) => booksOfProject(lang, p.id).length);
+  const projectsBlock = projects.length ? `<section class="projects-section">
+<div class="wrap">
+<header class="shelf-head">
+<h2><a href="${root}${lang}/projects/">${t.our_projects}</a></h2>
+<p>${esc(t.projects_intro)}</p>
+</header>
+${projects.map((p) => projectCard(p, lang, root)).join("\n")}
+</div>
+</section>` : "";
+
   const body = `${hero}
+${projectsBlock}
 ${seriesBlocks.join("\n")}
 <section class="about-short">
 <div class="wrap">
 <h2>${t.about_project}</h2>
-<p>${ABOUT[lang]}</p>
+<p>${ABOUT[lang][0]}</p>
 <p><a class="btn btn--outline" href="${root}${lang}/about/">${t.about_project} ›</a></p>
 </div>
 </section>`;
   write(`${lang}/index.html`, layout({ lang, rel, root, title: "", description: t.motto, body,
     jsonld: { "@context": "https://schema.org", "@type": "WebSite", name: NAME, url: `${SITE_URL}/${lang}/`, inLanguage: lang } }));
+}
+
+function photoTag(name, root) {
+  return `<picture><source type="image/webp" srcset="${root}assets/img/${name}.webp"><img src="${root}assets/img/${name}.jpg" alt="" loading="lazy"></picture>`;
+}
+
+// Зелёная полоса вверху страницы (как верх главной): надзаголовок, заголовок, подзаголовок, текст, фото.
+// thin — узкая полоса только с надзаголовком (страница книги).
+function band({ eyebrow = "", title = "", sub = "", lead = "", photo = "", thin = false }) {
+  if (thin) return `<section class="band band--thin"><div class="wrap">${eyebrow ? `<p class="eyebrow">${eyebrow}</p>` : ""}</div></section>`;
+  return `<section class="band${photo ? " band--photo" : ""}">
+<div class="wrap band-inner">
+<div>
+${eyebrow ? `<p class="eyebrow">${eyebrow}</p>` : ""}
+<h1>${title}</h1>
+${sub ? `<p class="band-sub">${sub}</p>` : ""}
+${lead ? `<p class="band-lead">${lead}</p>` : ""}
+</div>
+${photo}
+</div>
+</section>`;
+}
+
+// Карточка проекта: фото, название, годы, коротко о сути и сколько серий и изданий из него сделано.
+function projectCard(p, lang, root) {
+  const t = T[lang];
+  const series = seriesOf(p.id).filter((s) => booksIn(lang).some((b) => b.series === s.id));
+  const books = booksOfProject(lang, p.id);
+  const covers = sortFor(lang, books).slice(0, 3);
+  return `<article class="project-card">
+<a class="project-media" href="${root}${lang}/projects/${p.id}/" tabindex="-1">${p.photo ? `<span class="project-photo">${photoTag(p.photo, root)}</span>` : ""}<span class="project-covers">${covers.map((b) => picture(b, root, { sizes: "120px" })).join("")}</span></a>
+<div class="project-text">
+<p class="eyebrow">${t.project}</p>
+<h3><a href="${root}${lang}/projects/${p.id}/">${esc(p.name[lang])}</a></h3>
+<p class="project-period">${esc(p.period[lang])}</p>
+<p>${esc(p.short[lang])}</p>
+<p class="project-meta">${t.series_count(series.length)} · ${t.book_count(books.length)}</p>
+<p class="hero-actions"><a class="btn btn--primary" href="${root}${lang}/projects/${p.id}/">${t.view_project}</a></p>
+</div>
+</article>`;
+}
+
+function projectsPage(lang) {
+  const t = T[lang], rel = "projects/", root = rootFor(lang, rel);
+  const projects = PROJECTS.filter((p) => booksOfProject(lang, p.id).length);
+  const body = `${band({ title: t.projects, lead: esc(t.projects_intro) })}
+<div class="wrap page">
+${projects.map((p) => projectCard(p, lang, root)).join("\n")}
+</div>`;
+  write(`${lang}/${rel}index.html`, layout({ lang, rel, root, title: t.projects, description: t.projects_intro, body }));
+}
+
+function projectPage(lang, p) {
+  const t = T[lang], rel = `projects/${p.id}/`, root = rootFor(lang, rel);
+  const series = seriesOf(p.id).filter((s) => booksIn(lang).some((b) => b.series === s.id));
+  const blocks = series.map((s) => {
+    const books = sortFor(lang, booksIn(lang).filter((b) => b.series === s.id));
+    return `<section class="section project-series">
+<header class="shelf-head">
+<h2><a href="${root}${lang}/series/${s.id}/">${esc(s.name[lang])}</a></h2>
+<p>${esc(s.text[lang])}</p>
+</header>
+${grid(books, lang, root, s.journal ? "grid--journal" : "")}
+</section>`;
+  }).join("\n");
+  const body = `${band({ eyebrow: `<a href="${root}${lang}/projects/">${t.project}</a>`, title: esc(p.name[lang]), sub: esc(p.period[lang]), lead: p.text[lang],
+    photo: p.photo ? `<figure class="photo">${photoTag(p.photo, root)}</figure>` : "" })}
+<div class="wrap page project-page">
+<h2 class="section-title">${t.project_series}</h2>
+${blocks}
+</div>`;
+  const alts = Object.fromEntries(LANGS.filter((l) => booksOfProject(l, p.id).length).map((l) => [l, rel]));
+  const first = sortFor(lang, booksOfProject(lang, p.id))[0];
+  write(`${lang}/${rel}index.html`, layout({ lang, rel, root, title: p.name[lang], description: clip(stripTags(p.text[lang]), 180), body, alts,
+    ogImage: first ? `${SITE_URL}/${first.cover}` : undefined }));
 }
 
 function catalogPage(lang) {
@@ -317,11 +408,8 @@ function catalogPage(lang) {
     series.length > 1 ? group("series", t.series, series.map((s) => [s.id, s.name[lang]])) : "",
     bothFormats ? group("format", t.format_filter, [["print", t.print], ["ebook", t.ebook]]) : "",
   ].filter(Boolean).join("\n");
-  const body = `<div class="wrap page">
-<header class="page-head">
-<h1>${t.catalog}</h1>
-<p class="lead">${t.catalog_intro}</p>
-</header>
+  const body = `${band({ title: t.catalog, lead: esc(t.catalog_intro) })}
+<div class="wrap page">
 ${filters ? `<div class="filters" hidden>\n${filters}\n</div>` : ""}
 ${grid(books, lang, root, "catalog", true)}
 <p class="empty" hidden>${t.nothing_found}</p>
@@ -336,19 +424,11 @@ function sortLangs(lang, list) {
 function seriesPage(lang, s) {
   const t = T[lang], rel = `series/${s.id}/`, root = rootFor(lang, rel);
   const books = sortFor(lang, booksIn(lang).filter((b) => b.series === s.id));
-  const photo = s.photo
-    ? `<figure class="photo"><picture><source type="image/webp" srcset="${root}assets/img/${s.photo}.webp"><img src="${root}assets/img/${s.photo}.jpg" alt="" loading="lazy"></picture></figure>`
-    : "";
-  const body = `<div class="${s.journal ? "journal " : ""}series-page">
+  const photo = s.photo ? `<figure class="photo">${photoTag(s.photo, root)}</figure>` : "";
+  const body = `${band({ eyebrow: `<a href="${root}${lang}/projects/${s.project}/">${esc(projectById[s.project].name[lang])}</a> · ${t.series}`,
+    title: esc(s.name[lang]), lead: esc(s.text[lang]), photo })}
+<div class="${s.journal ? "journal " : ""}series-page">
 <div class="wrap page">
-<header class="page-head series-intro">
-<div>
-<p class="eyebrow">${t.series}</p>
-<h1>${esc(s.name[lang])}</h1>
-<p class="lead">${esc(s.text[lang])}</p>
-</div>
-${photo}
-</header>
 <h2 class="section-title">${t.series_books}</h2>
 ${grid(books, lang, root, s.journal ? "grid--journal" : "")}
 </div>
@@ -459,11 +539,12 @@ function bookPage(lang, b) {
     moreIssues.length ? `<h2 class="section-title">${t.more_issues}</h2>${grid(moreIssues, lang, root, "grid--journal")}` : "",
   ].filter(Boolean).join("");
 
-  const body = `<div class="${isJournal(b) ? "journal " : ""}book-page">
+  const crumbs = `<a href="${root}${lang}/projects/${s.project}/">${esc(projectById[s.project].name[lang])}</a> · <a href="${root}${lang}/series/${s.id}/">${esc(s.name[lang])}</a>`;
+  const body = `${band({ eyebrow: crumbs, thin: true })}
+<div class="${isJournal(b) ? "journal " : ""}book-page">
 <div class="wrap book">
 <div class="book-cover">${cover}</div>
 <div class="book-info">
-<p class="eyebrow"><a href="${root}${lang}/series/${s.id}/">${esc(s.name[lang])}</a></p>
 <h1 class="book-title" lang="${bl}">${esc(b.title)}</h1>
 ${subline(b) ? `<p class="book-volume" lang="${bl}">${esc(subline(b))}</p>` : ""}
 ${b.subtitle ? `<p class="book-subtitle" lang="${bl}">${esc(b.subtitle)}</p>` : ""}
@@ -495,10 +576,11 @@ function bigCover(b, root) {
 
 function aboutPage(lang) {
   const t = T[lang], rel = "about/", root = rootFor(lang, rel);
-  const body = `<div class="wrap page about">
-<header class="page-head"><h1>${t.about_project}</h1></header>
+  const body = `${band({ title: t.about_project })}
+<div class="wrap page about">
 <div class="about-grid">
-<div class="about-text"><p>${ABOUT[lang]}</p></div>
+<div class="about-text">${ABOUT[lang].map((p) => `<p>${p}</p>`).join("")}
+<p><a class="btn btn--outline" href="${root}${lang}/projects/">${t.our_projects} ›</a></p></div>
 <figure class="photo"><picture><source type="image/webp" srcset="${root}assets/img/thistle.webp"><img src="${root}assets/img/thistle.jpg" alt="" loading="lazy"></picture></figure>
 </div>
 <div class="about-photos">
@@ -507,12 +589,14 @@ function aboutPage(lang) {
 </div>
 <p class="center"><a class="btn btn--primary" href="${root}${lang}/books/">${t.to_catalog}</a></p>
 </div>`;
-  write(`${lang}/${rel}index.html`, layout({ lang, rel, root, title: t.about_project, description: clip(stripTags(ABOUT[lang]), 180), body }));
+  write(`${lang}/${rel}index.html`, layout({ lang, rel, root, title: t.about_project, description: clip(stripTags(ABOUT[lang][0]), 180), body }));
 }
 
 function legalPage(lang, slug, html, title) {
   const rel = `${slug}/`, root = rootFor(lang, rel);
-  const body = `<div class="wrap page"><article class="legal">${html}</article></div>`;
+  const h1 = (html.match(/<h1>([\s\S]*?)<\/h1>/) || [])[1] || title;
+  const body = `${band({ title: h1 })}
+<div class="wrap page"><article class="legal">${html.replace(/<h1>[\s\S]*?<\/h1>\s*/, "")}</article></div>`;
   write(`${lang}/${rel}index.html`, layout({ lang, rel, root, title, description: title, body }));
 }
 
@@ -532,6 +616,8 @@ for (const b of BOOKS) for (const k of ["preface", "excerpt"]) if (kitExists(b[k
 for (const lang of LANGS) {
   homePage(lang);
   catalogPage(lang);
+  projectsPage(lang);
+  for (const p of PROJECTS) if (booksOfProject(lang, p.id).length) projectPage(lang, p);
   for (const s of SERIES) if (booksIn(lang).some((b) => b.series === s.id)) seriesPage(lang, s);
   for (const b of booksIn(lang)) bookPage(lang, b);
   aboutPage(lang);
@@ -554,8 +640,8 @@ ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${SITE_URL}/${l}
 
 // 404: GitHub Pages показывает её по любому адресу, поэтому пути — от корня сайта.
 write("404.html", layout({ lang: "en", rel: "404/", root: BASE_PATH, title: T.en.not_found, description: T.en.not_found_text, noindex: true,
-  body: `<div class="wrap page notfound">
-<h1>404</h1>
+  body: `${band({ title: "404" })}
+<div class="wrap page notfound">
 ${LANGS.map((l) => `<p lang="${l}">${T[l].not_found}. <a href="${BASE_PATH}${l}/">${T[l].back_home}</a></p>`).join("\n")}
 </div>` }).replace(/<nav class="langs"[\s\S]*?<\/nav>/, ""));
 
