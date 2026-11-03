@@ -1,4 +1,4 @@
-// Тексты сайта на трёх языках: интерфейс, описания серий, «About», Impressum и Datenschutz.
+// Тексты сайта на трёх языках: интерфейс, проекты, описания серий, «О нас», Impressum и Datenschutz.
 // Данные о самих книгах — в kit/data/books.json.
 
 export const LANGS = ["en", "de", "ru"];
@@ -6,10 +6,37 @@ export const DEFAULT_LANG = "en";
 
 export const LANG_NAMES = { en: "English", de: "Deutsch", ru: "Русский" };
 
-// Порядок серий на сайте и их описания.
+// Проекты — источники (журналы и книги), из которых делаются издания. Порядок — как на сайте.
+// Новый проект: добавьте сюда блок и укажите его id в поле project у его серий ниже.
+export const PROJECTS = [
+  {
+    id: "wassersport",
+    photo: "hertha",
+    name: { en: "Wassersport", de: "Wassersport", ru: "Wassersport" },
+    period: {
+      en: "Berlin weekly, 1883–1895",
+      de: "Berliner Wochenschrift, 1883–1895",
+      ru: "Берлинский еженедельник, 1883–1895",
+    },
+    short: {
+      en: "Rowing, sailing and boatbuilding through the eyes of those who lived it.",
+      de: "Rudern, Segeln und Bootsbau mit den Augen derer, die dabei waren.",
+      ru: "Гребля, парусный спорт и постройка лодок глазами тех, кто этим жил.",
+    },
+    // Рассказ о журнале для страницы проекта (прежний текст «About» из ТЗ).
+    text: {
+      en: "From 1883 to 1895 the Berlin weekly <i>Wassersport</i> was the meeting place of German oarsmen, canoeists and yachtsmen. Its pages carried race results and club news — and, between them, the logs of holiday voyages, articles on how boats were designed and built, and the engravings and photographs that went with them. Aurum Viride brings these pages back: in new English and Russian translations and in the original German, set in modern type, with an introduction to every piece. The books are selected, translated and edited by Leonid Dudakov.",
+      de: "Von 1883 bis 1895 war die Berliner Wochenschrift <i>Wassersport</i> der Treffpunkt der deutschen Ruderer, Kanuten und Segler. Zwischen Regattaergebnissen und Vereinsnachrichten standen dort Fahrtenberichte, Aufsätze über Konstruktion und Bau von Booten und die dazugehörigen Holzstiche und Fotografien. Aurum Viride holt diese Seiten zurück: im deutschen Originaltext in behutsam modernisierter Rechtschreibung sowie in neuer englischer und russischer Übersetzung, mit einer Einführung zu jedem Beitrag. Auswahl und Herausgabe: Leonid Dudakov.",
+      ru: "С 1883 по 1895 год берлинский еженедельник <i>Wassersport</i> был местом встречи немецких гребцов, каноистов и яхтсменов. Между результатами регат и клубными новостями в нём печатались путевые журналы, статьи о проектировании и постройке лодок, гравюры и фотографии. Aurum Viride возвращает эти страницы: в новых переводах на английский и русский и в немецком оригинале современным шрифтом, с вступлением к каждому тексту. Составитель, переводчик и редактор — Леонид Дудаков.",
+    },
+  },
+];
+
+// Порядок серий на сайте и их описания. project — id проекта из списка выше.
 export const SERIES = [
   {
     id: "building-boats",
+    project: "wassersport",
     photo: "bubble",
     name: {
       en: "Building Boats in the Golden Age",
@@ -24,6 +51,7 @@ export const SERIES = [
   },
   {
     id: "under-oar-and-sail",
+    project: "wassersport",
     photo: "hertha",
     name: {
       en: "Under Oar and Sail",
@@ -38,6 +66,7 @@ export const SERIES = [
   },
   {
     id: "wassersport-1885-issues",
+    project: "wassersport",
     photo: null,
     journal: true, // кремово-синее оформление, как на обложках этой серии
     name: {
@@ -58,10 +87,13 @@ export const T = {
     consent_title: "Analytics cookies",
     consent_text: "We would like to use Google Analytics to see how visitors use this site. It sets cookies and sends data to Google, including to the USA. Analytics only starts if you accept. You can change your choice at any time via “Cookie settings” at the bottom of the page.",
     consent_accept: "Accept", consent_decline: "Decline", consent_more: "Privacy policy", consent_settings: "Cookie settings",
-    hero_lead: "Rowing, sailing and boatbuilding from the Berlin weekly Wassersport, 1883–1895 — in English, German and Russian.",
+    hero_lead: "Texts that show how people lived a hundred or two hundred years ago.",
     featured: "Featured", more_about_book: "Learn more",
-    motto: "Forgotten pages from the golden age of rowing and sailing",
-    nav_home: "Home", nav_books: "Books", nav_about: "About",
+    motto: "Forgotten pages of our history",
+    nav_home: "Home", nav_projects: "Projects", nav_books: "Books", nav_about: "About us",
+    projects: "Projects", project: "Project", our_projects: "Our projects", view_project: "Explore the project",
+    projects_intro: "Every project is one forgotten journal or book. From it we make new editions — reprints, collections and translations.",
+    project_series: "What we have made from it", series_count: (n) => (n === 1 ? "1 series" : `${n} series`), book_count: (n) => (n === 1 ? "1 title" : `${n} titles`),
     impressum: "Impressum", privacy: "Privacy",
     skip: "Skip to content",
     language: "Language",
@@ -73,7 +105,7 @@ export const T = {
     to_catalog: "Browse the catalogue",
     series_books: "Books in this series",
     view_series: "View the series",
-    about_project: "About the project",
+    about_project: "About us",
     nothing_found: "No books match these filters.",
     coming_soon: "Coming soon",
     other_link: "Print edition",
@@ -100,10 +132,13 @@ export const T = {
     consent_title: "Analyse-Cookies",
     consent_text: "Wir möchten Google Analytics nutzen, um zu sehen, wie Besucher diese Website verwenden. Dabei werden Cookies gesetzt und Daten an Google übermittelt, auch in die USA. Die Analyse startet nur, wenn Sie zustimmen. Ihre Wahl können Sie jederzeit über „Cookie-Einstellungen“ unten auf der Seite ändern.",
     consent_accept: "Akzeptieren", consent_decline: "Ablehnen", consent_more: "Datenschutzerklärung", consent_settings: "Cookie-Einstellungen",
-    hero_lead: "Rudern, Segeln und Bootsbau aus der Berliner Wochenschrift Wassersport, 1883–1895 — auf Deutsch, Englisch und Russisch.",
+    hero_lead: "Texte, die zeigen, wie die Menschen vor hundert oder zweihundert Jahren gelebt haben.",
     featured: "Empfehlung", more_about_book: "Mehr erfahren",
-    motto: "Vergessene Seiten aus dem goldenen Zeitalter des Ruderns und Segelns",
-    nav_home: "Start", nav_books: "Bücher", nav_about: "Über",
+    motto: "Vergessene Seiten unserer Geschichte",
+    nav_home: "Start", nav_projects: "Projekte", nav_books: "Bücher", nav_about: "Über uns",
+    projects: "Projekte", project: "Projekt", our_projects: "Unsere Projekte", view_project: "Zum Projekt",
+    projects_intro: "Jedes Projekt ist eine vergessene Zeitschrift oder ein vergessenes Buch. Daraus entstehen neue Ausgaben – Neuauflagen, Sammelbände und Übersetzungen.",
+    project_series: "Was daraus entstanden ist", series_count: (n) => (n === 1 ? "1 Reihe" : `${n} Reihen`), book_count: (n) => (n === 1 ? "1 Titel" : `${n} Titel`),
     impressum: "Impressum", privacy: "Datenschutz",
     skip: "Zum Inhalt",
     language: "Sprache",
@@ -115,7 +150,7 @@ export const T = {
     to_catalog: "Zum Katalog",
     series_books: "Bücher dieser Reihe",
     view_series: "Zur Reihe",
-    about_project: "Über das Projekt",
+    about_project: "Über uns",
     nothing_found: "Keine Bücher für diese Auswahl.",
     coming_soon: "Demnächst",
     other_link: "Druckausgabe",
@@ -142,10 +177,13 @@ export const T = {
     consent_title: "Cookies для аналитики",
     consent_text: "Мы хотели бы использовать Google Analytics, чтобы видеть, как посетители пользуются сайтом. Для этого ставятся cookies, а данные передаются в Google, в том числе в США. Аналитика включится, только если вы согласитесь. Изменить выбор можно в любой момент по ссылке «Настройки cookies» внизу страницы.",
     consent_accept: "Принять", consent_decline: "Отклонить", consent_more: "Политика конфиденциальности", consent_settings: "Настройки cookies",
-    hero_lead: "Гребля, парусный спорт и постройка лодок по страницам берлинского еженедельника Wassersport, 1883–1895, — на русском, английском и немецком.",
+    hero_lead: "Тексты, по которым видно, как жили люди сто и двести лет назад.",
     featured: "Рекомендуем", more_about_book: "Подробнее",
-    motto: "Забытые страницы золотого века гребли и парусного спорта",
-    nav_home: "Главная", nav_books: "Книги", nav_about: "О проекте",
+    motto: "Забытые страницы нашей истории",
+    nav_home: "Главная", nav_projects: "Проекты", nav_books: "Книги", nav_about: "О нас",
+    projects: "Проекты", project: "Проект", our_projects: "Наши проекты", view_project: "Подробнее о проекте",
+    projects_intro: "Каждый проект — это один забытый журнал или книга. Из него мы делаем новые издания: переиздания, сборники и переводы.",
+    project_series: "Что мы из него сделали", series_count: (n) => `${n} ${n === 1 ? "серия" : n < 5 ? "серии" : "серий"}`, book_count: (n) => `${n} ${n % 10 === 1 && n % 100 !== 11 ? "издание" : [2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100) ? "издания" : "изданий"}`,
     impressum: "Impressum", privacy: "Конфиденциальность",
     skip: "К содержанию",
     language: "Язык",
@@ -157,7 +195,7 @@ export const T = {
     to_catalog: "Перейти в каталог",
     series_books: "Книги серии",
     view_series: "Вся серия",
-    about_project: "О проекте",
+    about_project: "О нас",
     nothing_found: "По этим фильтрам книг нет.",
     coming_soon: "Скоро",
     other_link: "Печатное издание",
@@ -182,11 +220,20 @@ export const T = {
   },
 };
 
-// «About» — тексты из ТЗ, без изменений.
+// «О нас»: суть Aurum Viride (абзацы). Первый абзац показывается и на главной.
 export const ABOUT = {
-  en: "From 1883 to 1895 the Berlin weekly <i>Wassersport</i> was the meeting place of German oarsmen, canoeists and yachtsmen. Its pages carried race results and club news — and, between them, the logs of holiday voyages, articles on how boats were designed and built, and the engravings and photographs that went with them. Aurum Viride brings these pages back: in new English and Russian translations and in the original German, set in modern type, with an introduction to every piece. The books are selected, translated and edited by Leonid Dudakov.",
-  de: "Von 1883 bis 1895 war die Berliner Wochenschrift <i>Wassersport</i> der Treffpunkt der deutschen Ruderer, Kanuten und Segler. Zwischen Regattaergebnissen und Vereinsnachrichten standen dort Fahrtenberichte, Aufsätze über Konstruktion und Bau von Booten und die dazugehörigen Holzstiche und Fotografien. Aurum Viride holt diese Seiten zurück: im deutschen Originaltext in behutsam modernisierter Rechtschreibung sowie in neuer englischer und russischer Übersetzung, mit einer Einführung zu jedem Beitrag. Auswahl und Herausgabe: Leonid Dudakov.",
-  ru: "С 1883 по 1895 год берлинский еженедельник <i>Wassersport</i> был местом встречи немецких гребцов, каноистов и яхтсменов. Между результатами регат и клубными новостями в нём печатались путевые журналы, статьи о проектировании и постройке лодок, гравюры и фотографии. Aurum Viride возвращает эти страницы: в новых переводах на английский и русский и в немецком оригинале современным шрифтом, с вступлением к каждому тексту. Составитель, переводчик и редактор — Леонид Дудаков.",
+  en: [
+    "Aurum Viride is a project about the forgotten pages of our history. We look for old journals and books that have not been republished for a long time but still matter to those who want to step into the past: to feel the atmosphere of an era and to learn how people lived, what they cared about and what they argued about a hundred or two hundred years ago. We carefully republish these texts, compile new books from them and translate them into other languages.",
+    "Our first project is the Berlin weekly <i>Wassersport</i> (1883–1895): rowing, sailing and boatbuilding through the eyes of those who lived it. Others will follow.",
+  ],
+  de: [
+    "Aurum Viride ist ein Projekt über die vergessenen Seiten unserer Geschichte. Wir suchen alte Zeitschriften und Bücher, die lange nicht mehr neu aufgelegt wurden, aber alle interessieren, die in die Vergangenheit eintauchen möchten: die Atmosphäre einer Epoche spüren und erfahren, wie die Menschen vor hundert oder zweihundert Jahren lebten, wofür sie sich begeisterten und worüber sie stritten. Wir geben diese Texte behutsam neu heraus, stellen aus ihnen neue Bücher zusammen und übersetzen sie in andere Sprachen.",
+    "Unser erstes Projekt ist die Berliner Wochenschrift <i>Wassersport</i> (1883–1895): Rudern, Segeln und Bootsbau mit den Augen derer, die dabei waren. Weitere werden folgen.",
+  ],
+  ru: [
+    "Aurum Viride — проект о забытых страницах нашей истории. Мы находим старые журналы и книги, которые давно никто не переиздавал, но которые по-прежнему интересны тем, кто хочет погрузиться в прошлое: почувствовать атмосферу эпохи, узнать, как жили, чем увлекались и о чём спорили люди сто или двести лет назад. Мы бережно переиздаём эти тексты, собираем из них новые книги и переводим их на разные языки.",
+    "Первый проект — берлинский еженедельник <i>Wassersport</i> (1883–1895): гребля, парусный спорт и постройка лодок глазами тех, кто этим жил. Следом будут другие.",
+  ],
 };
 
 // Impressum (§ 5 DDG): имя, полный адрес и e-mail владельца на всех трёх языках.
