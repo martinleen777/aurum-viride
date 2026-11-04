@@ -187,7 +187,7 @@
     "under-oar-en-p141.webp"
    ],
    "links": {
-    "amazon": null,
+    "amazon": "https://www.amazon.com/dp/B0HQ7ZKCGD",
     "apple_books": null,
     "other": null
    },
@@ -196,7 +196,7 @@
     "ebook": null
    },
    "price": null,
-   "availability": "coming soon"
+   "availability": "available (Amazon: paperback B0HQ7ZKCGD, Kindle B0HQ7LVWFM)"
   },
   {
    "id": "under-sail-en",
