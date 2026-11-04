@@ -581,7 +581,7 @@ function aboutPage(lang) {
 <div class="about-grid">
 <div class="about-text">${ABOUT[lang].map((p) => `<p>${p}</p>`).join("")}
 <p class="about-actions"><a class="btn btn--primary" href="${root}${lang}/books/">${t.to_catalog}</a><a class="btn btn--outline" href="${root}${lang}/projects/">${t.our_projects} ›</a></p></div>
-<figure class="photo"><picture><source type="image/webp" srcset="${root}assets/img/thistle.webp"><img src="${root}assets/img/thistle.jpg" alt="" loading="lazy"></picture></figure>
+<figure class="photo"><picture><source type="image/webp" srcset="${root}assets/img/wiking.webp"><img src="${root}assets/img/wiking.jpg" alt="" loading="lazy"></picture></figure>
 </div>
 </div>`;
   write(`${lang}/${rel}index.html`, layout({ lang, rel, root, title: t.about_project, description: clip(stripTags(ABOUT[lang][0]), 180), body }));
