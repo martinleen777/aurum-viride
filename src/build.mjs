@@ -80,20 +80,23 @@ function sortFor(lang, list) {
 function storeLinks(b) {
   const l = b.links || {};
   const out = [];
-  if (l.amazon) out.push({ url: l.amazon, label: "Amazon" });
-  if (l.apple_books) out.push({ url: l.apple_books, label: "Apple Books" });
+  if (l.amazon) out.push({ url: l.amazon, label: "Amazon", key: "amazon" });
+  if (l.apple_books) out.push({ url: l.apple_books, label: "Apple Books", key: "apple_books" });
   if (l.other) {
     const o = typeof l.other === "string" ? { url: l.other } : l.other;
-    if (o.url) out.push({ url: o.url, label: o.label || null, other: true });
+    if (o.url) out.push({ url: o.url, label: o.label || null, other: true, key: "other" });
   }
   return out;
 }
 
-function storeButtons(b, lang) {
+// Атрибуты для подсчёта нажатий в Google Analytics (событие store_click, см. site.js).
+const trackAttrs = (b, l, place) => ` data-store="${l.key}" data-book="${esc(b.id)}" data-place="${place}"`;
+
+function storeButtons(b, lang, place = "book_page") {
   const links = storeLinks(b);
   if (!links.length) return `<div class="stores"><span class="store store--soon" aria-disabled="true">${T[lang].coming_soon}</span></div>`;
   return `<div class="stores">${links.map((l, i) =>
-    `<a class="store${i ? "" : " store--primary"}" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label || T[lang].other_link)}</a>`).join("")}</div>`;
+    `<a class="store${i ? "" : " store--primary"}" href="${esc(l.url)}" target="_blank" rel="noopener"${trackAttrs(b, l, place)}>${esc(l.label || T[lang].other_link)}</a>`).join("")}</div>`;
 }
 
 function formatPrice(price, lang) {
@@ -133,7 +136,7 @@ function card(b, lang, root, showSeries) {
   // Маленькие ссылки на магазины под карточкой — только если ссылки уже есть («Coming soon» здесь не показываем).
   const stores = storeLinks(b);
   const quick = stores.length
-    ? `<span class="card-stores">${stores.map((l) => `<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label || T[lang].other_link)}</a>`).join("")}</span>`
+    ? `<span class="card-stores">${stores.map((l) => `<a href="${esc(l.url)}" target="_blank" rel="noopener"${trackAttrs(b, l, "card")}>${esc(l.label || T[lang].other_link)}</a>`).join("")}</span>`
     : "";
   return `<li class="card" data-series="${b.series}" data-lang="${b.language}" data-format="${fmt}">
 <a class="card-main" href="${root}${lang}/books/${b.id}/">
@@ -517,7 +520,7 @@ function bookPage(lang, b) {
 <h2 id="excerpt" class="section-title">${t.excerpt}</h2>
 <p class="section-note">${t.excerpt_note}</p>
 <article class="paper paper--excerpt" lang="${bl}">${excerpt}
-<div class="paper-end">${storeButtons(b, lang)}</div>
+<div class="paper-end">${storeButtons(b, lang, "excerpt")}</div>
 </article>
 </section>` : "";
 

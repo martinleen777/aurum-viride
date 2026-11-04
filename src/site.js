@@ -75,6 +75,20 @@
     });
   }
 
+  // ---------- Подсчёт нажатий на кнопки магазинов ----------
+  // Событие store_click уходит в Google Analytics, только если посетитель согласился на аналитику.
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("a[data-store]");
+    if (!a || !window.__avGaLoaded || typeof window.gtag !== "function") return;
+    window.gtag("event", "store_click", {
+      store: a.getAttribute("data-store"),
+      book_id: a.getAttribute("data-book"),
+      placement: a.getAttribute("data-place"),
+      link_url: a.href,
+      transport_type: "beacon"
+    });
+  });
+
   // ---------- Лента обложек на телефоне: при открытии — по центру ----------
   var fan = document.querySelector(".hero-fan");
   if (fan && fan.scrollWidth > fan.clientWidth) {
