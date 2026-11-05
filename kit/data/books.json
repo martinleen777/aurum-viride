@@ -248,6 +248,72 @@
    "availability": "coming soon"
   },
   {
+   "id": "rivers-coasts-en",
+   "series": "under-oar-and-sail",
+   "volume": 3,
+   "language": "en",
+   "title": "Under Oar and Sail",
+   "volume_title": "Volume Three · Rivers and Coasts",
+   "subtitle": "Journeys by gig, sculler, canoe and yacht from the Berlin weekly Wassersport, 1883–1895",
+   "editor_credit": "Selected, translated and edited by Leonid Dudakov",
+   "back_title": "From the Danube to the Baltic Coast",
+   "blurb": [
+    "The third volume follows the water downstream and along the shore. Four old Berlin oarsmen row from Ulm to Budapest, a Viennese sculler pulls alone up the Danube to Linz, three Leipzig canoeists paddle to Stettin, and a Bonn four rows up the Rhine for the pleasure of it.",
+    "At its heart is the painter Otto Protzen’s summer of 1893: Berlin to Rügen and Arkona in a single sculler, told and drawn by himself. Seventeen accounts from 1883 to 1895, with the journal’s drawings and photographs.",
+    "Translated from the German, with an introduction to each journey."
+   ],
+   "contents": [
+    "Preface",
+    "Racing Boats at Sea",
+    "A Scientific Expedition to Plum Island",
+    "From Ulm to Budapest",
+    "Upstream from Vienna to Linz",
+    "Down the Rhine from Strassburg",
+    "A Trip to the Spreewald",
+    "By Canoe from Leipzig to Stettin",
+    "From the Spreewald to the Baltic in Rob Roy Canoes",
+    "A Sailing Trip through Holland",
+    "The Students’ Cutter Again",
+    "Two Naval Officers on Holiday",
+    "Round Usedom",
+    "To the Baltic in a Single Sculler",
+    "By Canoe from Einbeck to Bremen",
+    "Down the Danube by Paddle Boat",
+    "Magdeburg, Neustrelitz, Potsdam",
+    "Against the Stream"
+   ],
+   "pages": 202,
+   "trim_in": [
+    6,
+    9
+   ],
+   "formats": [
+    "paperback",
+    "ebook"
+   ],
+   "cover": "covers/rivers-coasts-en.jpg",
+   "cover_web": "covers/rivers-coasts-en-640.webp",
+   "cover_wrap": "covers/rivers-coasts-en-full-wrap.jpg",
+   "preface": "samples/rivers-coasts-en/preface.html",
+   "excerpt": "samples/rivers-coasts-en/excerpt.html",
+   "previews": [
+    "rivers-coasts-en-p001.webp",
+    "rivers-coasts-en-p006.webp",
+    "rivers-coasts-en-p048.webp"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null,
+    "other": null
+   },
+   "isbn": {
+    "paperback": null,
+    "ebook": null
+   },
+   "price": null,
+   "availability": "coming soon"
+  },
+  {
    "id": "unter-ruder-de",
    "series": "under-oar-and-sail",
    "volume": 1,
@@ -346,6 +412,72 @@
    "availability": "coming soon"
   },
   {
+   "id": "fluesse-kuesten-de",
+   "series": "under-oar-and-sail",
+   "volume": 3,
+   "language": "de",
+   "title": "Unter Ruder und Segel",
+   "volume_title": "Band III · Flüsse und Küsten",
+   "subtitle": "Fahrten mit Gig, Skiff, Canoe und Yacht aus der Berliner Wochenschrift Wassersport, 1883–1895",
+   "editor_credit": "Ausgewählt und herausgegeben von Leonid Dudakov",
+   "back_title": "Von der Donau bis zur Ostseeküste",
+   "blurb": [
+    "Der dritte Band folgt dem Wasser stromab und die Küsten entlang. Vier alte Berliner Ruderer fahren von Ulm nach Budapest, ein Wiener Skuller rudert allein die Donau hinauf bis Linz, drei Leipziger Canoeisten paddeln bis Stettin, und ein Bonner Vierer rudert zum Vergnügen den Rhein stromauf.",
+    "Im Mittelpunkt steht der Sommer 1893 des Malers Otto Protzen: im Einskuller von Berlin bis Rügen und Arkona, von ihm selbst erzählt und gezeichnet. Siebzehn Berichte aus den Jahren 1883 bis 1895, mit den Zeichnungen und Fotografien des Journals.",
+    "Die Originaltexte in behutsam modernisierter Rechtschreibung, mit einer Einführung zu jeder Fahrt."
+   ],
+   "contents": [
+    "Vorwort",
+    "Rennboote auf See",
+    "Eine wissenschaftliche Segelfahrt nach Plum-Island",
+    "Von Ulm nach Budapest",
+    "Stromauf von Wien nach Linz",
+    "Von Straßburg den Rhein hinab",
+    "Eine Spreewaldfahrt",
+    "Im Canoe von Leipzig nach Stettin",
+    "Vom Spreewald bis zur Ostsee im Rob-Roy-Canoe",
+    "Eine Segelfahrt durch Holland",
+    "Noch einmal der Studentenkutter",
+    "Zwei Marineoffiziere auf Urlaub",
+    "Rund um Usedom",
+    "Eine Ostsee-Reise im Einskuller",
+    "Im Canoe von Einbeck bis Bremen",
+    "Eine Donaufahrt im Paddelboot",
+    "Magdeburg–Neustrelitz–Potsdam",
+    "Wider den Strom!"
+   ],
+   "pages": 226,
+   "trim_in": [
+    6,
+    9
+   ],
+   "formats": [
+    "paperback",
+    "ebook"
+   ],
+   "cover": "covers/fluesse-kuesten-de.jpg",
+   "cover_web": "covers/fluesse-kuesten-de-640.webp",
+   "cover_wrap": "covers/fluesse-kuesten-de-full-wrap.jpg",
+   "preface": "samples/fluesse-kuesten-de/preface.html",
+   "excerpt": "samples/fluesse-kuesten-de/excerpt.html",
+   "previews": [
+    "fluesse-kuesten-de-p001.webp",
+    "fluesse-kuesten-de-p006.webp",
+    "fluesse-kuesten-de-p053.webp"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null,
+    "other": null
+   },
+   "isbn": {
+    "paperback": null,
+    "ebook": null
+   },
+   "price": null,
+   "availability": "coming soon"
+  },
+  {
    "id": "pod-veslom-ru",
    "series": "under-oar-and-sail",
    "volume": 1,
@@ -430,6 +562,72 @@
     "pod-parusom-ru-p001.webp",
     "pod-parusom-ru-p006.webp",
     "pod-parusom-ru-p057.webp"
+   ],
+   "links": {
+    "amazon": null,
+    "apple_books": null,
+    "other": null
+   },
+   "isbn": {
+    "paperback": null,
+    "ebook": null
+   },
+   "price": null,
+   "availability": "coming soon (not on Amazon; Apple Books / other)"
+  },
+  {
+   "id": "reki-poberezhya-ru",
+   "series": "under-oar-and-sail",
+   "volume": 3,
+   "language": "ru",
+   "title": "Под веслом и парусом",
+   "volume_title": "Том третий · Реки и побережья",
+   "subtitle": "Путешествия на гичке, одиночке, каноэ и яхте из берлинского еженедельника Wassersport, 1883–1895",
+   "editor_credit": "Составитель, переводчик и редактор Леонид Дудаков",
+   "back_title": "От Дуная до балтийского побережья",
+   "blurb": [
+    "Третий том идёт за водой — вниз по рекам и вдоль берегов. Четверо старых берлинских гребцов идут на вёслах из Ульма в Будапешт, венский гребец в одиночку поднимается по Дунаю до Линца, трое лейпцигских каноистов доходят до Штеттина, а боннская четвёрка ради удовольствия поднимается по Рейну против течения.",
+    "В центре книги — лето 1893 года художника Отто Процена: на одиночке от Берлина до Рюгена и Арконы, в его собственном рассказе и рисунках. Семнадцать рассказов 1883–1895 годов, с рисунками и фотографиями из журнала.",
+    "Перевод с немецкого, с вступлением к каждому путешествию."
+   ],
+   "contents": [
+    "Предисловие",
+    "Гоночные лодки в море",
+    "Научная экспедиция на Сливовый остров",
+    "Из Ульма в Будапешт",
+    "Вверх по Дунаю из Вены в Линц",
+    "Вниз по Рейну из Страсбурга",
+    "Поездка в Шпревальд",
+    "На каноэ из Лейпцига в Штеттин",
+    "Из Шпревальда к Балтийскому морю на каноэ «Роб Рой»",
+    "Под парусом по Голландии",
+    "Снова студенческий тендер",
+    "Два морских офицера в отпуске",
+    "Вокруг Узедома",
+    "К Балтике в одиночке",
+    "На каноэ из Айнбека в Бремен",
+    "Вниз по Дунаю на байдарке",
+    "Магдебург, Нойштрелиц, Потсдам",
+    "Против течения"
+   ],
+   "pages": 217,
+   "trim_in": [
+    6,
+    9
+   ],
+   "formats": [
+    "paperback",
+    "ebook"
+   ],
+   "cover": "covers/reki-poberezhya-ru.jpg",
+   "cover_web": "covers/reki-poberezhya-ru-640.webp",
+   "cover_wrap": "covers/reki-poberezhya-ru-full-wrap.jpg",
+   "preface": "samples/reki-poberezhya-ru/preface.html",
+   "excerpt": "samples/reki-poberezhya-ru/excerpt.html",
+   "previews": [
+    "reki-poberezhya-ru-p001.webp",
+    "reki-poberezhya-ru-p006.webp",
+    "reki-poberezhya-ru-p051.webp"
    ],
    "links": {
     "amazon": null,
