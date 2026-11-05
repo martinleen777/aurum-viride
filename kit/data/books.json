@@ -303,7 +303,7 @@
    ],
    "links": {
     "amazon": null,
-    "apple_books": null,
+    "apple_books": "https://books.apple.com/book/id6831153002",
     "other": null
    },
    "isbn": {
