@@ -41,7 +41,7 @@
    ],
    "links": {
     "amazon": null,
-    "apple_books": null,
+    "apple_books": "https://books.apple.com/book/id6831172038",
     "other": null
    },
    "isbn": {
@@ -237,7 +237,7 @@
    ],
    "links": {
     "amazon": null,
-    "apple_books": null,
+    "apple_books": "https://books.apple.com/book/id6831150270",
     "other": null
    },
    "isbn": {
