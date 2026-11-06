@@ -90,7 +90,7 @@
    ],
    "links": {
     "amazon": null,
-    "apple_books": null,
+    "apple_books": "https://books.apple.com/book/id6831204934",
     "other": null
    },
    "isbn": {
@@ -139,7 +139,7 @@
    ],
    "links": {
     "amazon": null,
-    "apple_books": null,
+    "apple_books": "https://books.apple.com/book/id6831246404",
     "other": null
    },
    "isbn": {
@@ -467,7 +467,7 @@
    ],
    "links": {
     "amazon": null,
-    "apple_books": null,
+    "apple_books": "https://books.apple.com/book/id6831209484",
     "other": null
    },
    "isbn": {
@@ -631,7 +631,7 @@
    ],
    "links": {
     "amazon": null,
-    "apple_books": null,
+    "apple_books": "https://books.apple.com/book/id6831250090",
     "other": null
    },
    "isbn": {
