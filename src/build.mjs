@@ -637,6 +637,13 @@ ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${SITE_URL}/${l}
 <p><a href="de/impressum/">Impressum</a> · <a href="de/privacy/">Datenschutz</a></p></body></html>
 `);
 
+// Немецкий адрес Datenschutz: /de/datenschutz/ → /de/privacy/ (основная страница остаётся одна).
+write("de/datenschutz/index.html", `<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Datenschutzerklärung — ${NAME}</title>
+<link rel="canonical" href="${SITE_URL}/de/privacy/"><meta name="robots" content="noindex">
+<meta http-equiv="refresh" content="0; url=../privacy/"></head>
+<body><p><a href="../privacy/">Datenschutzerklärung</a></p></body></html>
+`);
+
 // 404: GitHub Pages показывает её по любому адресу, поэтому пути — от корня сайта.
 write("404.html", layout({ lang: "en", rel: "404/", root: BASE_PATH, title: T.en.not_found, description: T.en.not_found_text, noindex: true,
   body: `${band({ title: "404" })}
