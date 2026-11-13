@@ -633,7 +633,8 @@ ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${SITE_URL}/${l}
 <meta http-equiv="refresh" content="0; url=${DEFAULT_LANG}/">
 <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
 <style>body{background:#fff;color:#1d1d1f;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;text-align:center;padding:4rem 1rem}a{color:#1f6f50}</style>
-</head><body><p><a href="en/">English</a> · <a href="de/">Deutsch</a> · <a href="ru/">Русский</a></p></body></html>
+</head><body><p><a href="en/">English</a> · <a href="de/">Deutsch</a> · <a href="ru/">Русский</a></p>
+<p><a href="de/impressum/">Impressum</a> · <a href="de/privacy/">Datenschutz</a></p></body></html>
 `);
 
 // 404: GitHub Pages показывает её по любому адресу, поэтому пути — от корня сайта.
